@@ -1,3 +1,7 @@
+import { Suspense, useEffect, useRef, useState } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
+import { useGLTF, useAnimations, OrbitControls, useProgress } from "@react-three/drei";
+import fallbackImg from "./assets/poster.webp";
 import {
   Mail,
   Phone,
@@ -115,7 +119,63 @@ function Navbar() {
   );
 }
 
+function AvatarModel({ onLoaded }) {
+  const group = useRef();
+  const { scene, animations } = useGLTF("/avatar_with_anim_formal.glb");
+  const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    onLoaded?.();
+    const action = actions?.[Object.keys(actions || {})[0]];
+    if (action) action.play();
+  }, [actions]);
+
+  return <primitive ref={group} object={scene} scale={2.5} position={[0, -3.6, 0]} />;
+}
+
+function AvatarScene({ onLoaded }) {
+  return (
+    <Canvas camera={{ position: [
+-17.889551863863957, 1.093526315702387, 
+24.790483188927276], fov: 5 }} gl={{ antialias: true }}>
+
+      <CameraDebugger />
+
+      <ambientLight intensity={1} color="white" />
+      <directionalLight position={[5, 5, 5]} intensity={1.2} color="white" />
+      <directionalLight position={[-5, -5, -5]} intensity={0.3} color="white" />
+
+      <Suspense fallback={null}>
+        <AvatarModel onLoaded={onLoaded} />
+      </Suspense>
+
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        autoRotate
+        autoRotateSpeed={0}
+      />
+    </Canvas>
+  );
+}
+
+function CameraDebugger() {
+  const { camera, scene } = useThree();
+
+  useEffect(() => {
+    window.r3fCamera = camera;
+    window.r3fScene = scene;
+
+    console.log("Camera exposed:", camera);
+  }, [camera, scene]);
+
+  return null;
+}
+
+
 function Hero() {
+  const [modelLoaded, setModelLoaded] = useState(false);
+
   return (
     <section id="home" className="hero section">
       <div className="heroText">
@@ -133,11 +193,16 @@ function Hero() {
         </div>
       </div>
       <div className="heroImageWrap">
-        <img
-          className="heroImage"
-          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop"
-          alt="Profile"
-        />
+        <div className="heroCanvasWrap">
+          <img
+            className={`heroFallbackImg ${modelLoaded ? "loaded" : ""}`}
+            src={fallbackImg}
+            alt=""
+          />
+          <div className={`heroCanvasInner ${modelLoaded ? "loaded" : ""}`}>
+            <AvatarScene onLoaded={() => setModelLoaded(true)} />
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -308,8 +373,13 @@ nav a:hover { color: var(--cyan); }
 .hero h1 { font-size: clamp(44px, 6vw, 78px); margin: 0; }
 .hero h2 { font-size: clamp(26px, 4vw, 42px); margin: 8px 0 20px; }
 .hero p { max-width: 650px; color: var(--text); line-height: 1.8; font-weight: 600; }
-.heroImageWrap { justify-self: center; width: min(430px, 82vw); aspect-ratio: 1; border-radius: 50%; padding: 7px; background: var(--cyan); box-shadow: 0 0 38px rgba(0,255,240,.7); }
-.heroImage { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.heroImageWrap { justify-self: center; width: min(430px, 82vw); aspect-ratio: 1; border-radius: 50%; padding: 7px; background: var(--cyan); box-shadow: 0 0 38px rgba(0,255,240,.7); overflow: hidden; }
+.heroCanvasWrap { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #0a0a0a; }
+.heroCanvasWrap canvas { display: block; width: 100% !important; height: 100% !important; }
+.heroFallbackImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.6s; z-index: 1; }
+.heroFallbackImg.loaded { opacity: 0; pointer-events: none; }
+.heroCanvasInner { width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s; }
+.heroCanvasInner.loaded { opacity: 1; }
 .socials { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin: 28px 0; }
 .socials a { width: 42px; height: 42px; display: grid; place-items: center; border: 1.5px solid var(--cyan); border-radius: 50%; color: var(--cyan); transition: .3s; }
 .socials a:hover { background: var(--cyan); color: #000; box-shadow: 0 0 25px var(--cyan); transform: translateY(-4px); }
