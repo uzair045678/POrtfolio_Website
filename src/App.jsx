@@ -14,6 +14,7 @@ import {
   PlayCircle,
   User,
   Briefcase,
+  X,
 } from "lucide-react";
 import {
   FaLinkedin,
@@ -131,17 +132,20 @@ const skills = [
 ];
 
 export default function App() {
+  const [videoSrc, setVideoSrc] = useState(null);
+
   return (
     <main>
       <style>{css}</style>
       <Navbar />
       <Hero />
       <WhoIAm />
-      <Portfolio />
+      <Portfolio setVideoSrc={setVideoSrc} />
       <Skills />
-      <FeaturedProjects />
+      <FeaturedProjects setVideoSrc={setVideoSrc} />
       <Contact />
       <Footer />
+      {videoSrc && <VideoModal src={videoSrc} onClose={() => setVideoSrc(null)} />}
     </main>
   );
 }
@@ -299,7 +303,26 @@ function Skills() {
   );
 }
 
-function Portfolio() {
+function VideoModal({ src, onClose }) {
+  const videoRef = useRef();
+
+  useEffect(() => {
+    videoRef.current?.play();
+  }, [src]);
+
+  return (
+    <div className="videoModalOverlay" onClick={onClose}>
+      <div className="videoModalContent" onClick={(e) => e.stopPropagation()}>
+        <button className="videoModalClose" onClick={onClose}><X size={24} /></button>
+        <video ref={videoRef} controls autoPlay>
+          <source src={src} type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  );
+}
+
+function Portfolio({ setVideoSrc }) {
   return (
     <section id="portfolio" className="section portfolio">
       <p className="label">PORTFOLIO</p>
@@ -308,9 +331,10 @@ function Portfolio() {
         {portfolioProjects.map((project) => (
           <article className="projectCard" key={project.title}>
             {project.video ? (
-              <video controls poster="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop">
-                <source src={project.video} type="video/mp4" />
-              </video>
+              <div className="projectVideoThumb" onClick={() => setVideoSrc(project.video)}>
+                <video src={project.video} />
+                <PlayCircle className="playIconOverlay" />
+              </div>
             ) : (
               <img src={project.image} alt={project.title} />
             )}
@@ -324,7 +348,7 @@ function Portfolio() {
   );
 }
 
-function FeaturedProjects() {
+function FeaturedProjects({ setVideoSrc }) {
   return (
     <section className="section featured">
       <p className="label">FEATURED</p>
@@ -332,10 +356,8 @@ function FeaturedProjects() {
       <div className="videoGrid">
         {featuredProjects.map((project) => (
           <article className="videoCard" key={project.title}>
-            <div className="videoBox">
-              <video controls poster="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop">
-                <source src={project.video} type="video/mp4" />
-              </video>
+            <div className="videoBox" onClick={() => setVideoSrc(project.video)}>
+              <video src={project.video} />
               <PlayCircle className="playIcon" />
             </div>
             <h3>{project.title}</h3>
@@ -457,11 +479,15 @@ nav a:hover { color: var(--cyan); }
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
 .projectCard img { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
+.projectCard video { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; }
+.projectVideoThumb { position: relative; width: 100%; height: 190px; border-radius: 12px; overflow: hidden; cursor: pointer; }
+.projectVideoThumb video { width: 100%; height: 100%; object-fit: cover; }
+.playIconOverlay { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; opacity: .7; pointer-events: none; }
 .projectCard h3, .videoCard h3 { font-size: 22px; margin: 18px 0 8px; }
 .projectCard p, .videoCard p { color: var(--muted); line-height: 1.6; }
 .featured { background: radial-gradient(circle at center, rgba(0,255,240,.06), transparent 45%), #050505; }
 .videoGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
+.videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); cursor: pointer; }
 .videoBox video { width: 100%; height: 210px; object-fit: cover; display: block; filter: brightness(.82); }
 .playIcon { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; opacity: .6; pointer-events: none; }
 .contact { background: #050505; }
@@ -474,6 +500,13 @@ footer { background: #111; text-align: center; padding: 40px 12%; }
 footer .socials { justify-content: center; margin-top: 0; }
 .footerLinks { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin: 24px 0 34px; }
 footer p { margin: 0; }
+.videoModalOverlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,.85); display: flex; align-items: center; justify-content: center; padding: 40px; animation: fadeIn .2s; }
+.videoModalContent { position: relative; width: 100%; max-width: 960px; border-radius: 16px; overflow: hidden; animation: scaleIn .25s; }
+.videoModalContent video { width: 100%; display: block; border-radius: 16px; }
+.videoModalClose { position: absolute; top: 16px; right: 16px; z-index: 10; background: rgba(0,0,0,.7); border: none; color: white; border-radius: 50%; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; transition: .2s; }
+.videoModalClose:hover { background: var(--cyan); color: #000; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @media (max-width: 980px) {
   .navbar { padding: 18px 6%; flex-direction: column; gap: 18px; }
   nav { gap: 18px; flex-wrap: wrap; justify-content: center; }
