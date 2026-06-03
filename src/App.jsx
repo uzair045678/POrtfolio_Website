@@ -36,13 +36,13 @@ const portfolioProjects = [
   },
   {
     title: "Multiplayer Robot Simulation",
-    desc: "Unity + Firebase system syncing desktop inputs and stats with real-world robot players in real-time.",
+    desc: "Unity + Firebase(Realtime FB) system syncing movement inputs and stats with real-world robot players in real-time. Implemented offline multiplayer for player stats and inputs.",
     image: "src/assets/Robot SImulation2.jpg",
     tags: ["Unity", "Firebase", "Multiplayer"],
   },
   {
     title: "Web AR Object Placement",
-    desc: "WebAR-based system for interactive 3D model placement using AR Foundation and WebXR.",
+    desc: "WebAR-based system for interactive 3D model placement of object utilizing plane detection using WebXR.",
     image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
     tags: ["WebAR", "AR Foundation", "WebXR"],
   },
@@ -58,6 +58,48 @@ const portfolioProjects = [
     video: "src/assets/Immersive Mecanno VR.mp4",
     tags: ["Unity", "VR", "C#"],
   },
+  {
+    title: "Color Connect – Line Puzzle",
+    desc: "Android based Puzzle Game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration also adding constant content updates and seasonal events to maintain player engagement.",
+    tags: ["Unity", "VR", "C#"],
+  },
+  {
+    title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
+    desc: "Unreal Engine 5 based multiplayer VR helicopter simulator with server-authoritative flight controls, seat occupancy management, and realistic physics-based flight mechanics, controls fallback to copilot.",
+    video: "src/assets/Immersive Mecanno VR.mp4",
+    tags: ["Unity", "VR", "C#"],
+  },
+   {
+    title: "HomeCare Safety VR Simulator",
+    desc: "Unity-based VR simulator with Convai integration for interactive home safety hazard detection and AI-driven elder avatar training.",
+    video: "src/assets/Immersive Mecanno VR.mp4",
+    tags: ["Unity", "VR", "C#"],
+  },
+   {
+    title: "Endless Runner Game (Unreal Engine 5)",
+    desc: "Unreal Engine 5 based endless runner game with dynamic obstacle generation and power-ups.",
+    video: "src/assets/Immersive Mecanno VR.mp4",
+    tags: ["Unity", "VR", "C#"],
+  },
+  {
+    title: "Ricochet Monster Mobile Game",
+    desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
+    video: "src/assets/Immersive Mecanno VR.mp4",
+    tags: ["Unity", "VR", "C#"],
+  },
+  {    
+    title: "Mob Rushers Mobile Game",
+    desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
+    video: "src/assets/Immersive Mecanno VR.mp4",
+    tags: ["Unity", "VR", "C#"],
+  },
+  {
+    title: "AR Weather App",
+    desc: "Fetches weather through API and displays it in an interactive AR interface with dynamic backgrounds and 3D weather models.",
+    video: "src/assets/Immersive Mecanno VR.mp4",
+    tags: ["Unity", "VR", "C#"],
+  },
+
 ];
 
 const featuredProjects = [
@@ -142,8 +184,8 @@ function AvatarScene({ onLoaded }) {
       <CameraDebugger />
 
       <ambientLight intensity={1} color="white" />
-      <directionalLight position={[5, 5, 5]} intensity={1.2} color="white" />
-      <directionalLight position={[-5, -5, -5]} intensity={0.3} color="white" />
+      <directionalLight position={[5, 5, 5]} intensity={10} color="white" />
+      <directionalLight position={[-5, -5, -5]} intensity={2} color="white" />
 
       <Suspense fallback={null}>
         <AvatarModel onLoaded={onLoaded} />
@@ -265,7 +307,13 @@ function Portfolio() {
       <div className="projectGrid">
         {portfolioProjects.map((project) => (
           <article className="projectCard" key={project.title}>
-            <img src={project.image} alt={project.title} />
+            {project.video ? (
+              <video controls poster="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop">
+                <source src={project.video} type="video/mp4" />
+              </video>
+            ) : (
+              <img src={project.image} alt={project.title} />
+            )}
             <h3>{project.title}</h3>
             <p>{project.desc}</p>
             <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
@@ -374,7 +422,7 @@ nav a:hover { color: var(--cyan); }
 .hero h2 { font-size: clamp(26px, 4vw, 42px); margin: 8px 0 20px; }
 .hero p { max-width: 650px; color: var(--text); line-height: 1.8; font-weight: 600; }
 .heroImageWrap { justify-self: center; width: min(430px, 82vw); aspect-ratio: 1; border-radius: 50%; padding: 7px; background: var(--cyan); box-shadow: 0 0 38px rgba(0,255,240,.7); overflow: hidden; }
-.heroCanvasWrap { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #0a0a0a; }
+.heroCanvasWrap { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #00fff0a6; }
 .heroCanvasWrap canvas { display: block; width: 100% !important; height: 100% !important; }
 .heroFallbackImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.6s; z-index: 1; }
 .heroFallbackImg.loaded { opacity: 0; pointer-events: none; }
