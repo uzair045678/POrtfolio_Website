@@ -27,13 +27,13 @@ const portfolioProjects = [
   {
     title: "Virtual Hajj VR Tour",
     desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
+    image: "src/assets/Virtual Hajj Tour 2.jpg",
     tags: ["Unreal", "VR", "Multiplayer"],
   },
   {
     title: "Multiplayer Robot Simulation",
     desc: "Unity + Firebase system syncing desktop inputs and stats with real-world robot players in real-time.",
-    image: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
+    image: "src/assets/Robot SImulation2.jpg",
     tags: ["Unity", "Firebase", "Multiplayer"],
   },
   {
@@ -51,7 +51,7 @@ const portfolioProjects = [
   {
     title: "Immersive Mecanno VR (FYP)",
     desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
-    image: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
+    video: "src/assets/Immersive Mecanno VR.mp4",
     tags: ["Unity", "VR", "C#"],
   },
 ];
@@ -72,7 +72,7 @@ const featuredProjects = [
   {
     title: "Color Connect – Line Puzzle",
     desc: "Mobile puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration.",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
+    video: "src/assets/Immersive Mecanno VR.mp4",
     tags: ["Unity", "Mobile", "Puzzle", "Optimization"],
   },
 ];
@@ -122,13 +122,13 @@ function Hero() {
         <h1>Hi, it's <span>Uzair Ahmad Mirza</span></h1>
         <h2>I'm an <span>XR Developer</span></h2>
         <p>
-          I build immersive AR, VR, XR, and real-time interactive experiences using Unity,
+          I am a problem solver,  I build immersive AR, VR, XR, and real-time interactive experiences using Unity,
           Unreal Engine, C#, C++, and modern gameplay systems. I specialize in VR/AR applications,
           interactive simulations, and real-world XR solutions that bridge virtual environments with practical applications.
         </p>
         <Socials />
         <div className="buttons">
-          <a className="btn primary" href="#portfolio">View Projects</a>
+          <a className="btn primary" href="https://drive.google.com/file/d/1SFvy9tz3M3zbPICQiOPr3EyrsOMCE05q/view?usp=drive_link" target="_blank">Check my CV</a>
           <a className="btn outline" href="#contact">Contact Me</a>
         </div>
       </div>
@@ -153,14 +153,15 @@ function WhoIAm() {
           <p>
             I'm a passionate XR and Game Developer specializing in Unity, Unreal Engine 5, VR, and AR.
             I build interactive systems, immersive experiences, and real-time simulations that bridge
-            virtual environments with real-world applications.
+            virtual environments with real-world applications to solve real world problems.
           </p>
           <div className="contactLine"><Mail size={16} /> uzair12ahmad34@gmail.com</div>
           <div className="contactLine"><Phone size={16} /> +92-3341574422</div>
           <div className="contactLine"><MapPin size={16} /> Islamabad, Pakistan</div>
+          <div className="contactLine"><a href="https://www.linkedin.com/in/uzair-ahmad-mirza-b939a21a2/" target="_blank" style={{color:"var(--cyan)"}}>LinkedIn</a><span style={{color:"var(--muted)"}}> / </span><a href="https://github.com/uzair045678" target="_blank" style={{color:"var(--cyan)"}}>GitHub</a></div>
         </div>
-        <Stat icon={<Briefcase />} value="3+" label="Years Experience" />
-        <Stat icon={<Code2 />} value="20+" label="Projects Completed" />
+        <Stat icon={<Briefcase />} value="2.5+" label="Years Experience" />
+        <Stat icon={<Code2 />} value="10+" label="Projects Completed" />
         <Stat icon={<User />} value="10+" label="Happy Clients" />
         <Stat icon={<Cpu />} value="24/7" label="Support" />
       </div>
