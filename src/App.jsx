@@ -1,8 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
-import { useGLTF, useAnimations, OrbitControls, useProgress } from "@react-three/drei";
-import fallbackImg from "/poster.webp";
-
+import { lazy, Suspense, useState } from "react";
 import {
   Mail,
   Phone,
@@ -16,11 +12,11 @@ import {
   User,
   Briefcase,
 } from "lucide-react";
-import {
-  FaLinkedin,
-  FaGithub,
-  
-} from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
+
+const Hero = lazy(() => import("./Hero.jsx"));
+
+const base = import.meta.env.BASE_URL || "/";
 
 const portfolioProjects = [
   {
@@ -32,18 +28,18 @@ const portfolioProjects = [
   {
     title: "Virtual Hajj VR Tour",
     desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: "assets/Virtual Hajj Tour 2.jpg",
+    image: base + "images/Virtual Hajj Tour 2.jpg",
     tags: ["Unreal", "VR", "Multiplayer"],
   },
   {
     title: "Multiplayer Robot Simulation",
-    desc: "Unity + Firebase(Realtime FB) system syncing movement inputs and stats with real-world robot players in real-time. Implemented offline multiplayer for player stats and inputs.",
-    image: "./assets/Robot SSimulation2.jpg",
+    desc: "Unity + Firebase(Realtime FB) system syncing movement inputs and stats with real-world robot players in real-time.",
+    image: base + "images/Robot SImulation2.jpg",
     tags: ["Unity", "Firebase", "Multiplayer"],
   },
   {
     title: "Web AR Object Placement",
-    desc: "WebAR-based system for interactive 3D model placement of object utilizing plane detection using WebXR.",
+    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
     image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
     tags: ["WebAR", "AR Foundation", "WebXR"],
   },
@@ -56,72 +52,77 @@ const portfolioProjects = [
   {
     title: "Immersive Mecanno VR (FYP)",
     desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
-    video: "/Immersive_Mecanno_VR.mp4",
+    video: base + "videos/Immersive_Mecanno_VR.mp4",
+    poster: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "Color Connect – Line Puzzle",
-    desc: "Android based Puzzle Game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration also adding constant content updates and seasonal events to maintain player engagement.",
-    image: "/ColorCOnnect.png",
-    tags: ["Unity", "VR", "C#"],
+    desc: "Android puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics.",
+    image: base + "images/ColorCOnnect.png",
+    tags: ["Unity", "Mobile", "Puzzle"],
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
-    desc: "Unreal Engine 5 based multiplayer VR helicopter simulator with server-authoritative flight controls, seat occupancy management, and realistic physics-based flight mechanics, controls fallback to copilot.",
-    video: "/Heli-simulator.mp4",
-    tags: ["Unreal Engine 5", "Game"],
+    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics.",
+    video: base + "videos/EndlessRunnerGame.mp4",
+    poster: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
+    tags: ["Unreal Engine 5", "VR", "Multiplayer"],
   },
-   {
+  {
     title: "HomeCare Safety VR Simulator",
-    desc: "Unity-based VR simulator with Convai integration for interactive home safety hazard detection and AI-driven elder avatar training.",
-    video: "/HomeCare_Safety_VR_Simulator.mp4",
-    tags: ["Unity", "VR", "C#"],
+    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
+    video: base + "videos/HomeCare_Safety_VR.mp4",
+    poster: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
+    tags: ["Unity", "VR", "AI", "Convai"],
   },
-   {
+  {
     title: "Endless Runner Game (Unreal Engine 5)",
-    desc: "Unreal Engine 5 based endless runner game with dynamic obstacle generation and power-ups.",
-    video: "/EndlessRunnerGame.mp4",
-    tags: ["Unreal Engine 5", "VR","Simulator", "C++"],
+    desc: "UE5 endless runner with dynamic obstacle generation and power-ups.",
+    video: base + "videos/EndlessRunnerGame.mp4",
+    poster: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
+    tags: ["Unreal Engine 5", "Game"],
   },
   {
     title: "Ricochet Monster Mobile Game",
-    desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
-    image: "/RicochetMonster.png",
-    tags: ["Unity", "VR", "C#"],
+    desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
+    image: base + "images/RicochetMonster.png",
+    tags: ["Unity", "Mobile", "Live Ops"],
   },
-  {    
+  {
     title: "Mob Rushers Mobile Game",
-    desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
-    image: "/MobRushers.png",
-    tags: ["Unity", "VR", "C#"],
+    desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
+    image: base + "images/MobRushers.png",
+    tags: ["Unity", "Mobile", "Live Ops"],
   },
   {
     title: "AR Weather App",
-    desc: "Fetches weather through API and displays it in an interactive AR interface with dynamic backgrounds and 3D weather models.",
-    image: "AR_Weather.jfif",
-    tags: ["Unity", "VR", "C#"],
+    desc: "Fetches weather via API and displays it in an interactive AR interface with 3D weather models.",
+    image: base + "images/AR_Weather.jfif",
+    tags: ["Unity", "AR", "API"],
   },
-
 ];
 
 const featuredProjects = [
   {
     title: "VR Home Caretaker Simulator",
-    desc: "Unity-based VR simulator with Convai integration for interactive home safety hazard detection and AI-driven elder avatar training.",
+    desc: "Unity VR simulator with Convai for home safety hazard detection and AI-driven elder avatar training.",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
+    poster: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
     tags: ["Unity", "VR", "AI", "Convai"],
   },
   {
     title: "Multiplayer VR Helicopter Plugin",
-    desc: "Server-authoritative multiplayer VR helicopter plugin in Unreal with replicated flight controls and seat occupancy management.",
+    desc: "Server-authoritative multiplayer VR helicopter plugin in Unreal with replicated flight controls.",
     video: "https://www.w3schools.com/html/movie.mp4",
+    poster: "https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop",
     tags: ["Unreal", "VR", "Multiplayer", "Replication"],
   },
   {
     title: "Color Connect – Line Puzzle",
-    desc: "Mobile puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration.",
-    image: "/ColorCOnnect.png",
-    tags: ["Unity", "Mobile", "Puzzle", "Optimization"],
+    desc: "Mobile puzzle game with 10k+ downloads, optimized load times by 20%.",
+    image: base + "images/ColorCOnnect.png",
+    tags: ["Unity", "Mobile", "Puzzle"],
   },
 ];
 
@@ -137,7 +138,9 @@ export default function App() {
     <main>
       <style>{css}</style>
       <Navbar />
-      <Hero />
+      <Suspense fallback={<div className="hero section" style={{ minHeight: "88vh" }} />}>
+        <Hero />
+      </Suspense>
       <WhoIAm />
       <Portfolio />
       <Skills />
@@ -163,95 +166,6 @@ function Navbar() {
   );
 }
 
-function AvatarModel({ onLoaded }) {
-  const group = useRef();
-  const { scene, animations } = useGLTF("/avatar_with_anim_formal.glb");
-  const { actions } = useAnimations(animations, group);
-
-  useEffect(() => {
-    onLoaded?.();
-    const action = actions?.[Object.keys(actions || {})[0]];
-    if (action) action.play();
-  }, [actions]);
-
-  return <primitive ref={group} object={scene} scale={2.5} position={[0, -3.6, 0]} />;
-}
-
-function AvatarScene({ onLoaded }) {
-  return (
-    <Canvas camera={{ position: [
--17.889551863863957, 1.093526315702387, 
-24.790483188927276], fov: 5 }} gl={{ antialias: true }}>
-
-      <CameraDebugger />
-
-      <ambientLight intensity={1} color="white" />
-      <directionalLight position={[5, 5, 5]} intensity={10} color="white" />
-      <directionalLight position={[-5, -5, -5]} intensity={2} color="white" />
-
-      <Suspense fallback={null}>
-        <AvatarModel onLoaded={onLoaded} />
-      </Suspense>
-
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        autoRotate
-        autoRotateSpeed={0}
-      />
-    </Canvas>
-  );
-}
-
-function CameraDebugger() {
-  const { camera, scene } = useThree();
-
-  useEffect(() => {
-    window.r3fCamera = camera;
-    window.r3fScene = scene;
-
-    console.log("Camera exposed:", camera);
-  }, [camera, scene]);
-
-  return null;
-}
-
-
-function Hero() {
-  const [modelLoaded, setModelLoaded] = useState(false);
-
-  return (
-    <section id="home" className="hero section">
-      <div className="heroText">
-        <h1>Hi, it's <span>Uzair Ahmad Mirza</span></h1>
-        <h2>I'm an <span>XR Developer</span></h2>
-        <p>
-          I am a problem solver,  I build immersive AR, VR, XR, and real-time interactive experiences using Unity,
-          Unreal Engine, C#, C++, and modern gameplay systems. I specialize in VR/AR applications,
-          interactive simulations, and real-world XR solutions that bridge virtual environments with practical applications.
-        </p>
-        <Socials />
-        <div className="buttons">
-          <a className="btn primary" href="https://drive.google.com/file/d/1SFvy9tz3M3zbPICQiOPr3EyrsOMCE05q/view?usp=drive_link" target="_blank">Check my CV</a>
-          <a className="btn outline" href="#contact">Contact Me</a>
-        </div>
-      </div>
-      <div className="heroImageWrap">
-        <div className="heroCanvasWrap">
-          <img
-            className={`heroFallbackImg ${modelLoaded ? "loaded" : ""}`}
-            src={fallbackImg}
-            alt=""
-          />
-          <div className={`heroCanvasInner ${modelLoaded ? "loaded" : ""}`}>
-            <AvatarScene onLoaded={() => setModelLoaded(true)} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function WhoIAm() {
   return (
     <section id="about" className="section about">
@@ -262,12 +176,16 @@ function WhoIAm() {
           <p>
             I'm a passionate XR and Game Developer specializing in Unity, Unreal Engine 5, VR, and AR.
             I build interactive systems, immersive experiences, and real-time simulations that bridge
-            virtual environments with real-world applications to solve real world problems.
+            virtual environments with real-world applications.
           </p>
           <div className="contactLine"><Mail size={16} /> uzair12ahmad34@gmail.com</div>
           <div className="contactLine"><Phone size={16} /> +92-3341574422</div>
           <div className="contactLine"><MapPin size={16} /> Islamabad, Pakistan</div>
-          <div className="contactLine"><a href="https://www.linkedin.com/in/uzair-ahmad-mirza-b939a21a2/" target="_blank" style={{color:"var(--cyan)"}}>LinkedIn</a><span style={{color:"var(--muted)"}}> / </span><a href="https://github.com/uzair045678" target="_blank" style={{color:"var(--cyan)"}}>GitHub</a></div>
+          <div className="contactLine">
+            <a href="https://www.linkedin.com/in/uzair-ahmad-mirza-b939a21a2/" target="_blank" style={{ color: "var(--cyan)" }}>LinkedIn</a>
+            <span style={{ color: "var(--muted)" }}> / </span>
+            <a href="https://github.com/uzair045678" target="_blank" style={{ color: "var(--cyan)" }}>GitHub</a>
+          </div>
         </div>
         <Stat icon={<Briefcase />} value="2.5+" label="Years Experience" />
         <Stat icon={<Code2 />} value="10+" label="Projects Completed" />
@@ -301,6 +219,25 @@ function Skills() {
   );
 }
 
+function LazyVideo({ src, poster }) {
+  const [loaded, setLoaded] = useState(false);
+
+  if (loaded) {
+    return (
+      <video controls autoPlay>
+        <source src={src} type="video/mp4" />
+      </video>
+    );
+  }
+
+  return (
+    <div className="videoPlaceholder" onClick={() => setLoaded(true)}>
+      <img src={poster} alt="" className="videoThumb" />
+      <PlayCircle className="playIcon" />
+    </div>
+  );
+}
+
 function Portfolio() {
   return (
     <section id="portfolio" className="section portfolio">
@@ -309,7 +246,11 @@ function Portfolio() {
       <div className="projectGrid">
         {portfolioProjects.map((project) => (
           <article className="projectCard" key={project.title}>
-            <img src={project.image} alt={project.title} />
+            {project.video ? (
+              <LazyVideo src={project.video} poster={project.poster} />
+            ) : (
+              <img src={project.image} alt={project.title} />
+            )}
             <h3>{project.title}</h3>
             <p>{project.desc}</p>
             <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
@@ -329,10 +270,11 @@ function FeaturedProjects() {
         {featuredProjects.map((project) => (
           <article className="videoCard" key={project.title}>
             <div className="videoBox">
-              <video controls poster="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop">
-                <source src={project.video} type="video/mp4" />
-              </video>
-              <PlayCircle className="playIcon" />
+              {project.video ? (
+                <LazyVideo src={project.video} poster={project.poster} />
+              ) : (
+                <img src={project.image} alt={project.title} />
+              )}
             </div>
             <h3>{project.title}</h3>
             <p>{project.desc}</p>
@@ -452,14 +394,20 @@ nav a:hover { color: var(--cyan); }
 .projectGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
-.projectCard img { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
+.projectCard img, .projectCard .videoPlaceholder { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
+.projectCard video { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard h3, .videoCard h3 { font-size: 22px; margin: 18px 0 8px; }
 .projectCard p, .videoCard p { color: var(--muted); line-height: 1.6; }
 .featured { background: radial-gradient(circle at center, rgba(0,255,240,.06), transparent 45%), #050505; }
 .videoGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
-.videoBox video { width: 100%; height: 210px; object-fit: cover; display: block; filter: brightness(.82); }
-.playIcon { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; opacity: .6; pointer-events: none; }
+.videoBox video { width: 100%; height: 210px; object-fit: cover; display: block; }
+.videoBox .videoPlaceholder { width: 100%; height: 210px; }
+.videoPlaceholder { position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.videoThumb { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.7); transition: filter .3s; }
+.videoPlaceholder:hover .videoThumb { filter: brightness(.5); }
+.videoPlaceholder:hover .playIcon { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+.playIcon { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; opacity: .8; pointer-events: none; transition: .3s; width: 56px; height: 56px; }
 .contact { background: #050505; }
 .contactForm { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 1050px; margin: auto; }
 .inputGroup { display: grid; gap: 22px; }
