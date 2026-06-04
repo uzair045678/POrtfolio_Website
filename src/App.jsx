@@ -2,6 +2,13 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, useAnimations, OrbitControls, useProgress } from "@react-three/drei";
 import fallbackImg from "./assets/poster.webp";
+import hajjImg from "./assets/Virtual Hajj Tour 2.jpg";
+import robotImg from "./assets/Robot SImulation2.jpg";
+import immersiveVideo from "./assets/Immersive_Mecanno_VR.mp4";
+import endlessRunnerVideo from "./assets/EndlessRunnerGame.mp4";
+import colorConnectImg from "./assets/ColorCOnnect.png";
+import ricochetImg from "./assets/RicochetMonster.png";
+import mobRushersImg from "./assets/MobRushers.png";
 import {
   Mail,
   Phone,
@@ -15,6 +22,7 @@ import {
   User,
   Briefcase,
   X,
+  ExternalLink,
 } from "lucide-react";
 import {
   FaLinkedin,
@@ -32,13 +40,13 @@ const portfolioProjects = [
   {
     title: "Virtual Hajj VR Tour",
     desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: "src/assets/Virtual Hajj Tour 2.jpg",
+    image: hajjImg,
     tags: ["Unreal", "VR", "Multiplayer"],
   },
   {
     title: "Multiplayer Robot Simulation",
     desc: "Unity + Firebase(Realtime FB) system syncing movement inputs and stats with real-world robot players in real-time. Implemented offline multiplayer for player stats and inputs.",
-    image: "src/assets/Robot SImulation2.jpg",
+    image: robotImg,
     tags: ["Unity", "Firebase", "Multiplayer"],
   },
   {
@@ -56,48 +64,52 @@ const portfolioProjects = [
   {
     title: "Immersive Mecanno VR (FYP)",
     desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    video: immersiveVideo,
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "Color Connect – Line Puzzle",
     desc: "Android based Puzzle Game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration also adding constant content updates and seasonal events to maintain player engagement.",
+    image: colorConnectImg,
+    link: "https://play.google.com/store/apps/details?id=com.XRDigital.DotConnect",
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
     desc: "Unreal Engine 5 based multiplayer VR helicopter simulator with server-authoritative flight controls, seat occupancy management, and realistic physics-based flight mechanics, controls fallback to copilot.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    video: immersiveVideo,
     tags: ["Unity", "VR", "C#"],
   },
    {
     title: "HomeCare Safety VR Simulator",
     desc: "Unity-based VR simulator with Convai integration for interactive home safety hazard detection and AI-driven elder avatar training.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    video: immersiveVideo,
     tags: ["Unity", "VR", "C#"],
   },
    {
     title: "Endless Runner Game (Unreal Engine 5)",
     desc: "Unreal Engine 5 based endless runner game with dynamic obstacle generation and power-ups.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    video: endlessRunnerVideo,
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "Ricochet Monster Mobile Game",
     desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    image: ricochetImg,
+    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.Monster2",
     tags: ["Unity", "VR", "C#"],
   },
   {    
     title: "Mob Rushers Mobile Game",
     desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    image: mobRushersImg,
+    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.RunnerClash",
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "AR Weather App",
     desc: "Fetches weather through API and displays it in an interactive AR interface with dynamic backgrounds and 3D weather models.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    video: immersiveVideo,
     tags: ["Unity", "VR", "C#"],
   },
 
@@ -119,7 +131,7 @@ const featuredProjects = [
   {
     title: "Color Connect – Line Puzzle",
     desc: "Mobile puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration.",
-    video: "src/assets/Immersive Mecanno VR.mp4",
+    video: immersiveVideo,
     tags: ["Unity", "Mobile", "Puzzle", "Optimization"],
   },
 ];
@@ -341,6 +353,11 @@ function Portfolio({ setVideoSrc }) {
             <h3>{project.title}</h3>
             <p>{project.desc}</p>
             <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+            {project.link && (
+              <a href={project.link} target="_blank" className="projectLink" onClick={(e) => e.stopPropagation()}>
+                <ExternalLink size={14} /> Play Store
+              </a>
+            )}
           </article>
         ))}
       </div>
@@ -478,6 +495,8 @@ nav a:hover { color: var(--cyan); }
 .projectGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
+.projectLink { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 8px 16px; border: 1px solid var(--cyan); border-radius: 999px; color: var(--cyan); font-size: 13px; font-weight: 700; transition: .3s; }
+.projectLink:hover { background: var(--cyan); color: #000; }
 .projectCard img { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard video { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; }
 .projectVideoThumb { position: relative; width: 100%; height: 190px; border-radius: 12px; overflow: hidden; cursor: pointer; }
