@@ -1,14 +1,8 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, useAnimations, OrbitControls, useProgress } from "@react-three/drei";
-import fallbackImg from "./assets/poster.webp";
-import hajjImg from "./assets/Virtual Hajj Tour 2.jpg";
-import robotImg from "./assets/Robot SImulation2.jpg";
-import immersiveVideo from "./assets/Immersive_Mecanno_VR.mp4";
-import endlessRunnerVideo from "./assets/EndlessRunnerGame.mp4";
-import colorConnectImg from "./assets/ColorCOnnect.png";
-import ricochetImg from "./assets/RicochetMonster.png";
-import mobRushersImg from "./assets/MobRushers.png";
+import fallbackImg from "/poster.webp";
+
 import {
   Mail,
   Phone,
@@ -21,8 +15,6 @@ import {
   PlayCircle,
   User,
   Briefcase,
-  X,
-  ExternalLink,
 } from "lucide-react";
 import {
   FaLinkedin,
@@ -40,13 +32,13 @@ const portfolioProjects = [
   {
     title: "Virtual Hajj VR Tour",
     desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: hajjImg,
+    image: "assets/Virtual Hajj Tour 2.jpg",
     tags: ["Unreal", "VR", "Multiplayer"],
   },
   {
     title: "Multiplayer Robot Simulation",
     desc: "Unity + Firebase(Realtime FB) system syncing movement inputs and stats with real-world robot players in real-time. Implemented offline multiplayer for player stats and inputs.",
-    image: robotImg,
+    image: "./assets/Robot SSimulation2.jpg",
     tags: ["Unity", "Firebase", "Multiplayer"],
   },
   {
@@ -64,52 +56,49 @@ const portfolioProjects = [
   {
     title: "Immersive Mecanno VR (FYP)",
     desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
-    video: immersiveVideo,
+    video: "/Immersive_Mecanno_VR.mp4",
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "Color Connect – Line Puzzle",
     desc: "Android based Puzzle Game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration also adding constant content updates and seasonal events to maintain player engagement.",
-    image: colorConnectImg,
-    link: "https://play.google.com/store/apps/details?id=com.XRDigital.DotConnect",
+    image: "/ColorCOnnect.png",
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
     desc: "Unreal Engine 5 based multiplayer VR helicopter simulator with server-authoritative flight controls, seat occupancy management, and realistic physics-based flight mechanics, controls fallback to copilot.",
-    video: immersiveVideo,
-    tags: ["Unity", "VR", "C#"],
+    video: "/Heli-simulator.mp4",
+    tags: ["Unreal Engine 5", "Game"],
   },
    {
     title: "HomeCare Safety VR Simulator",
     desc: "Unity-based VR simulator with Convai integration for interactive home safety hazard detection and AI-driven elder avatar training.",
-    video: immersiveVideo,
+    video: "/HomeCare_Safety_VR_Simulator.mp4",
     tags: ["Unity", "VR", "C#"],
   },
    {
     title: "Endless Runner Game (Unreal Engine 5)",
     desc: "Unreal Engine 5 based endless runner game with dynamic obstacle generation and power-ups.",
-    video: endlessRunnerVideo,
-    tags: ["Unity", "VR", "C#"],
+    video: "/EndlessRunnerGame.mp4",
+    tags: ["Unreal Engine 5", "VR","Simulator", "C++"],
   },
   {
     title: "Ricochet Monster Mobile Game",
     desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
-    image: ricochetImg,
-    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.Monster2",
+    image: "/RicochetMonster.png",
     tags: ["Unity", "VR", "C#"],
   },
   {    
     title: "Mob Rushers Mobile Game",
     desc: "Maintained and supported live mobile games across Android and iOS platforms, implementing regular updates, bug fixes, Unity Ads, AdMob, Firebase Analytics and Unity Analytics. Also Optimized applications for performance, stability, and user experience across devices, resulting in a 15% increase in user retention and a 10% boost in average session duration.",
-    image: mobRushersImg,
-    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.RunnerClash",
+    image: "/MobRushers.png",
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "AR Weather App",
     desc: "Fetches weather through API and displays it in an interactive AR interface with dynamic backgrounds and 3D weather models.",
-    video: immersiveVideo,
+    image: "AR_Weather.jfif",
     tags: ["Unity", "VR", "C#"],
   },
 
@@ -131,7 +120,7 @@ const featuredProjects = [
   {
     title: "Color Connect – Line Puzzle",
     desc: "Mobile puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics integration.",
-    video: immersiveVideo,
+    image: "/ColorCOnnect.png",
     tags: ["Unity", "Mobile", "Puzzle", "Optimization"],
   },
 ];
@@ -144,20 +133,17 @@ const skills = [
 ];
 
 export default function App() {
-  const [videoSrc, setVideoSrc] = useState(null);
-
   return (
     <main>
       <style>{css}</style>
       <Navbar />
       <Hero />
       <WhoIAm />
-      <Portfolio setVideoSrc={setVideoSrc} />
+      <Portfolio />
       <Skills />
-      <FeaturedProjects setVideoSrc={setVideoSrc} />
+      <FeaturedProjects />
       <Contact />
       <Footer />
-      {videoSrc && <VideoModal src={videoSrc} onClose={() => setVideoSrc(null)} />}
     </main>
   );
 }
@@ -315,26 +301,7 @@ function Skills() {
   );
 }
 
-function VideoModal({ src, onClose }) {
-  const videoRef = useRef();
-
-  useEffect(() => {
-    videoRef.current?.play();
-  }, [src]);
-
-  return (
-    <div className="videoModalOverlay" onClick={onClose}>
-      <div className="videoModalContent" onClick={(e) => e.stopPropagation()}>
-        <button className="videoModalClose" onClick={onClose}><X size={24} /></button>
-        <video ref={videoRef} controls autoPlay>
-          <source src={src} type="video/mp4" />
-        </video>
-      </div>
-    </div>
-  );
-}
-
-function Portfolio({ setVideoSrc }) {
+function Portfolio() {
   return (
     <section id="portfolio" className="section portfolio">
       <p className="label">PORTFOLIO</p>
@@ -342,22 +309,10 @@ function Portfolio({ setVideoSrc }) {
       <div className="projectGrid">
         {portfolioProjects.map((project) => (
           <article className="projectCard" key={project.title}>
-            {project.video ? (
-              <div className="projectVideoThumb" onClick={() => setVideoSrc(project.video)}>
-                <video src={project.video} />
-                <PlayCircle className="playIconOverlay" />
-              </div>
-            ) : (
-              <img src={project.image} alt={project.title} />
-            )}
+            <img src={project.image} alt={project.title} />
             <h3>{project.title}</h3>
             <p>{project.desc}</p>
             <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-            {project.link && (
-              <a href={project.link} target="_blank" className="projectLink" onClick={(e) => e.stopPropagation()}>
-                <ExternalLink size={14} /> Play Store
-              </a>
-            )}
           </article>
         ))}
       </div>
@@ -365,7 +320,7 @@ function Portfolio({ setVideoSrc }) {
   );
 }
 
-function FeaturedProjects({ setVideoSrc }) {
+function FeaturedProjects() {
   return (
     <section className="section featured">
       <p className="label">FEATURED</p>
@@ -373,8 +328,10 @@ function FeaturedProjects({ setVideoSrc }) {
       <div className="videoGrid">
         {featuredProjects.map((project) => (
           <article className="videoCard" key={project.title}>
-            <div className="videoBox" onClick={() => setVideoSrc(project.video)}>
-              <video src={project.video} />
+            <div className="videoBox">
+              <video controls poster="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?q=80&w=900&auto=format&fit=crop">
+                <source src={project.video} type="video/mp4" />
+              </video>
               <PlayCircle className="playIcon" />
             </div>
             <h3>{project.title}</h3>
@@ -495,18 +452,12 @@ nav a:hover { color: var(--cyan); }
 .projectGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
-.projectLink { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 8px 16px; border: 1px solid var(--cyan); border-radius: 999px; color: var(--cyan); font-size: 13px; font-weight: 700; transition: .3s; }
-.projectLink:hover { background: var(--cyan); color: #000; }
 .projectCard img { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
-.projectCard video { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; }
-.projectVideoThumb { position: relative; width: 100%; height: 190px; border-radius: 12px; overflow: hidden; cursor: pointer; }
-.projectVideoThumb video { width: 100%; height: 100%; object-fit: cover; }
-.playIconOverlay { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; opacity: .7; pointer-events: none; }
 .projectCard h3, .videoCard h3 { font-size: 22px; margin: 18px 0 8px; }
 .projectCard p, .videoCard p { color: var(--muted); line-height: 1.6; }
 .featured { background: radial-gradient(circle at center, rgba(0,255,240,.06), transparent 45%), #050505; }
 .videoGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); cursor: pointer; }
+.videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
 .videoBox video { width: 100%; height: 210px; object-fit: cover; display: block; filter: brightness(.82); }
 .playIcon { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; opacity: .6; pointer-events: none; }
 .contact { background: #050505; }
@@ -519,13 +470,6 @@ footer { background: #111; text-align: center; padding: 40px 12%; }
 footer .socials { justify-content: center; margin-top: 0; }
 .footerLinks { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin: 24px 0 34px; }
 footer p { margin: 0; }
-.videoModalOverlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,.85); display: flex; align-items: center; justify-content: center; padding: 40px; animation: fadeIn .2s; }
-.videoModalContent { position: relative; width: 100%; max-width: 960px; border-radius: 16px; overflow: hidden; animation: scaleIn .25s; }
-.videoModalContent video { width: 100%; display: block; border-radius: 16px; }
-.videoModalClose { position: absolute; top: 16px; right: 16px; z-index: 10; background: rgba(0,0,0,.7); border: none; color: white; border-radius: 50%; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; transition: .2s; }
-.videoModalClose:hover { background: var(--cyan); color: #000; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes scaleIn { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @media (max-width: 980px) {
   .navbar { padding: 18px 6%; flex-direction: column; gap: 18px; }
   nav { gap: 18px; flex-wrap: wrap; justify-content: center; }
