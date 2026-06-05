@@ -28,7 +28,7 @@ const portfolioProjects = [
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
-    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics.Also implemented player seaat assignment, detachment, and Ownership transfer mode from Pilot to COpilot using C++ and Blueprints.",
+    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics.Also implemented player seaat assignment, detachment, and Ownership transfer mode from Pilot to Co-pilot using C++ and Blueprints.",
     video: base + "videos/Helicopter_Simulator.mp4",
     poster: base + "images/Helicopter.png",
     tags: ["Unreal Engine 5", "C++", "Multiplayer"],
@@ -169,7 +169,7 @@ export default function App() {
 function Navbar() {
   return (
     <header className="navbar">
-      <a href="#home" className="logo">Uzair <span>Ahmad</span></a>
+      <a href="#home" className="logo">Uzair Ahmad<span> - Portfolio</span></a>
       <nav>
         <a href="#home">Home</a>
         <a href="#about">About Me</a>
