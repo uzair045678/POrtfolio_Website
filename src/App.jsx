@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState, Fragment } from "react";
 import {
   Mail,
   Phone,
@@ -12,13 +12,41 @@ import {
   User,
   Briefcase,
 } from "lucide-react";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaGooglePlay } from "react-icons/fa";
 
 const Hero = lazy(() => import("./Hero.jsx"));
 
 const base = import.meta.env.BASE_URL || "/";
 
 const portfolioProjects = [
+  {
+    title: "HomeCare Safety VR Simulator",
+    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
+    video: base + "videos/HomeCare_Safety_VR.mp4",
+    poster: base + "images/HomeCare_VR.png",
+    tags: ["Unity", "VR", "AI", "Convai"],
+  },
+  {
+    title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
+    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics.Also implemented player seaat assignment, detachment, and Ownership transfer mode from Pilot to COpilot using C++ and Blueprints.",
+    video: base + "videos/Helicopter_Simulator.mp4",
+    poster: base + "images/Helicopter.png",
+    tags: ["Unreal Engine 5", "C++", "Multiplayer"],
+  },
+  {
+    title: "Immersive Mecanno VR (FYP)",
+    desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
+    video: base + "videos/Immersive_Mecanno_VR.mp4",
+    poster: base + "images/Mecano_VR.png",
+    tags: ["Unity", "VR", "C#"],
+  },
+  {
+    title: "Endless Runner Game (Unreal Engine 5)",
+    desc: "UE5 endless runner with dynamic obstacle generation and power-ups.",
+    video: base + "videos/EndlessRunnerGame.mp4",
+    poster: base + "images/RunnerGame.png",
+    tags: ["Unreal Engine 5", "Game"],
+  },
   {
     title: "AR Media Platform",
     desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR Image Targets at Runtime and the content to render on it (currently supports video.",
@@ -31,6 +59,28 @@ const portfolioProjects = [
     image: base + "images/Virtual Hajj Tour 3.jpg",
     tags: ["Unreal", "VR", "Multiplayer"],
   },
+
+  /*{
+    title: "Web AR Object Placement",
+    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
+    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
+    tags: ["WebAR", "AR Foundation", "WebXR"],
+  },*/
+  
+  {
+    title: "AR Measurement App",
+    desc: "AR app that uses plane detection and spatial mapping to measure real-world objects and distances with high accuracy.",
+    image: base + "images/AR_Measurement_App_1.png",
+    tags: ["AR", "Unity", "AR Foundation"],
+  },
+  /*{
+    title: "AR Portfolio Contact Card",
+    desc: "Scannable AR contact card overlaying 3D portfolio content for interactive networking.",
+    image: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=900&auto=format&fit=crop",
+    tags: ["AR", "Unity", "Vuforia"],
+  },*/
+  
+  
   {
     title: "Multiplayer Robot Simulation",
     desc: "Unity + Firebase(Realtime FB) system syncing movement inputs and stats with real-world robot players in real-time.",
@@ -38,69 +88,34 @@ const portfolioProjects = [
     tags: ["Unity", "Firebase", "Multiplayer"],
   },
   {
-    title: "Web AR Object Placement",
-    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
-    tags: ["WebAR", "AR Foundation", "WebXR"],
+    title: "AR Weather App",
+    desc: "Fetches weather via API and displays it in an interactive AR interface with 3D weather models.",
+    image: base + "images/AR_Weather.jfif",
+    tags: ["Unity", "AR", "API"],
   },
-  {
-    title: "AR Portfolio Contact Card",
-    desc: "Scannable AR contact card overlaying 3D portfolio content for interactive networking.",
-    image: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=900&auto=format&fit=crop",
-    tags: ["AR", "Unity", "Vuforia"],
-  },
-  {
-    title: "Immersive Mecanno VR (FYP)",
-    desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
-    video: base + "videos/Immersive_Mecanno_VR.mp4",
-    poster: base + "images/Mecano_VR.png",
-    tags: ["Unity", "VR", "C#"],
-  },
+  
   {
     title: "Color Connect – Line Puzzle",
+    link: "https://play.google.com/store/apps/details?id=com.XRDigital.DotConnect",
     desc: "Android puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics.",
     image: base + "images/ColorCOnnect_1.png",
     tags: ["Unity", "Mobile", "Puzzle"],
   },
   {
-    title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
-    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics.",
-    video: base + "videos/Helicopter_Simulator.mp4",
-    poster: base + "images/Helicopter.png",
-    tags: ["Unreal Engine 5", "VR", "Multiplayer"],
-  },
-  {
-    title: "HomeCare Safety VR Simulator",
-    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
-    video: base + "videos/HomeCare_Safety_VR.mp4",
-    poster: base + "images/HomeCare_VR.png",
-    tags: ["Unity", "VR", "AI", "Convai"],
-  },
-  {
-    title: "Endless Runner Game (Unreal Engine 5)",
-    desc: "UE5 endless runner with dynamic obstacle generation and power-ups.",
-    video: base + "videos/EndlessRunnerGame.mp4",
-    poster: base + "images/RunnerGame.png",
-    tags: ["Unreal Engine 5", "Game"],
-  },
-  {
     title: "Ricochet Monster Mobile Game",
+    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.Monster2",
     desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
     image: base + "images/RicochetMonster.png",
     tags: ["Unity", "Mobile", "Live Ops"],
   },
   {
     title: "Mob Rushers Mobile Game",
+    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.RunnerClash",
     desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
     image: base + "images/MobRushers.png",
     tags: ["Unity", "Mobile", "Live Ops"],
   },
-  {
-    title: "AR Weather App",
-    desc: "Fetches weather via API and displays it in an interactive AR interface with 3D weather models.",
-    image: base + "images/AR_Weather.jfif",
-    tags: ["Unity", "AR", "API"],
-  },
+  
 ];
 
 const featuredProjects = [
@@ -142,9 +157,9 @@ export default function App() {
         <Hero />
       </Suspense>
       <WhoIAm />
+      <FeaturedProjects />
       <Portfolio />
       <Skills />
-      <FeaturedProjects />
       <Contact />
       <Footer />
     </main>
@@ -244,18 +259,32 @@ function Portfolio() {
       <p className="label">PORTFOLIO</p>
       <h2 className="sectionTitle">Portfolio <span>Projects</span></h2>
       <div className="projectGrid">
-        {portfolioProjects.map((project) => (
-          <article className="projectCard" key={project.title}>
-            {project.video ? (
-              <LazyVideo src={project.video} poster={project.poster} />
-            ) : (
-              <img src={project.image} alt={project.title} />
-            )}
-            <h3>{project.title}</h3>
-            <p>{project.desc}</p>
-            <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-          </article>
-        ))}
+        {portfolioProjects.map((project) => {
+          const card = (
+            <article className="projectCard">
+              {project.video ? (
+                <LazyVideo src={project.video} poster={project.poster} />
+              ) : (
+                <img src={project.image} alt={project.title} />
+              )}
+              <h3>{project.title}</h3>
+              <p>{project.desc}</p>
+              <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+              {project.link && (
+                <span className="storeBtn" onClick={(e) => { e.stopPropagation(); window.open(project.link, '_blank', 'noopener,noreferrer'); }}>
+                  <FaGooglePlay /> Play Store
+                </span>
+              )}
+            </article>
+          );
+          return project.link ? (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" key={project.title} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+              {card}
+            </a>
+          ) : (
+            <Fragment key={project.title}>{card}</Fragment>
+          );
+        })}
       </div>
     </section>
   );
@@ -398,10 +427,12 @@ nav a:hover { color: var(--cyan); }
 .projectCard video { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard h3, .videoCard h3 { font-size: 22px; margin: 18px 0 8px; }
 .projectCard p, .videoCard p { color: var(--muted); line-height: 1.6; }
+.storeBtn { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 10px 18px; background: #1c1c1c; border: 1px solid rgba(255,255,255,.09); border-radius: 10px; color: var(--cyan); font-size: 14px; cursor: pointer; transition: .3s; text-decoration: none; }
+.storeBtn:hover { background: rgba(0,255,240,.12); border-color: var(--cyan); }
 .featured { background: radial-gradient(circle at center, rgba(0,255,240,.06), transparent 45%), #050505; }
 .videoGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
-.videoBox video { width: 100%; height: 210px; object-fit: cover; display: block; }
+.videoBox video, .videoBox img { width: 100%; height: 210px; object-fit: cover; display: block; }
 .videoBox .videoPlaceholder { width: 100%; height: 210px; }
 .videoPlaceholder { position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .videoThumb { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.7); transition: filter .3s; }
