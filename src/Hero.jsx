@@ -35,6 +35,7 @@ function AvatarScene({ onLoaded }) {
       <ambientLight intensity={1} color="white" />
       <directionalLight position={[5, 5, 5]} intensity={10} color="white" />
       <directionalLight position={[-5, -5, -5]} intensity={2} color="white" />
+      <directionalLight position={[5, 0, -5]} intensity={4} color="white" />
       <Suspense fallback={null}>
         <AvatarModel onLoaded={onLoaded} />
       </Suspense>

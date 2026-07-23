@@ -202,9 +202,8 @@ function WhoIAm() {
             <a href="https://github.com/uzair045678" target="_blank" style={{ color: "var(--cyan)" }}>GitHub</a>
           </div>
         </div>
-        <Stat icon={<Briefcase />} value="2.5+" label="Years Experience" />
-        <Stat icon={<Code2 />} value="10+" label="Projects Completed" />
-        <Stat icon={<User />} value="10+" label="Happy Clients" />
+        <Stat icon={<Briefcase />} value="3+" label="Years Experience" />
+        <Stat icon={<Code2 />} value="20+" label="Projects Completed" />
         <Stat icon={<Cpu />} value="24/7" label="Support" />
       </div>
     </section>
