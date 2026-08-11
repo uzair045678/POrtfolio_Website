@@ -189,9 +189,7 @@ function WhoIAm() {
       <div className="aboutGrid">
         <div className="aboutCard large">
           <p>
-            I'm a passionate XR and Game Developer specializing in Unity, Unreal Engine 5, VR, and AR.
-            I build interactive systems, immersive experiences, and real-time simulations that bridge
-            virtual environments with real-world applications.
+            I'm a Software Developer specialized in XR with 3+ years of experience building interactive applications, simulations, and real-time systems using Unity and Unreal Engine. I enjoy solving practical problems by combining existing technologies, APIs, networking, and immersive interfaces into complete working solutions.
           </p>
           <div className="contactLine"><Mail size={16} /> uzair12ahmad34@gmail.com</div>
           <div className="contactLine"><Phone size={16} /> +92-3341574422</div>
