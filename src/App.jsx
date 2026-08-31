@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, Fragment } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   Mail,
   Phone,
@@ -12,8 +12,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import { FaLinkedin, FaGithub, FaGooglePlay } from "react-icons/fa";
-
-const Hero = lazy(() => import("./Hero.jsx"));
+import Hero from "./Hero.jsx";
 
 const base = import.meta.env.BASE_URL || "/";
 
@@ -21,28 +20,28 @@ const portfolioProjects = [
   {
     title: "HomeCare Safety VR Simulator",
     desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
-    video: base + "videos/HomeCare_Safety_VR.mp4",
+    video: base + "videos/HomeCare_Safety_VR_3.mp4",
     poster: base + "images/HomeCare_VR.png",
     tags: ["Unity", "VR", "AI", "Convai"],
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
     desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics. I also implemented player seat assignment, detachment, and ownership transfer from pilot to co-pilot using C++ and Blueprints.",
-    video: base + "videos/Helicopter_Simulator.mp4",
+    video: base + "videos/Helicopter_Simulator_3.mp4",
     poster: base + "images/Helicopter.png",
     tags: ["Unreal Engine 5", "C++", "Multiplayer"],
   },
   {
     title: "Immersive Mecanno VR (FYP)",
     desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
-    video: base + "videos/Immersive_Mecanno_VR.mp4",
+    video: base + "videos/Immersive_Mecanno_VR_2.mp4",
     poster: base + "images/Mecano_VR.png",
     tags: ["Unity", "VR", "C#"],
   },
   {
     title: "Endless Runner Game (Unreal Engine 5)",
     desc: "UE5 endless runner with dynamic obstacle generation and power-ups.",
-    video: base + "videos/EndlessRunnerGame.mp4",
+    video: base + "videos/EndlessRunnerGame_2.mp4",
     poster: base + "images/RunnerGame.png",
     tags: ["Unreal Engine 5", "Game"],
   },
@@ -121,14 +120,14 @@ const featuredProjects = [
   {
     title: "VR Home Caretaker Simulator",
     desc: "Unity VR simulator with Convai for home safety hazard detection and AI-driven elder avatar training.",
-    video: base + "videos/HomeCare_Safety_VR.mp4",
+    video: base + "videos/HomeCare_Safety_VR_3.mp4",
     poster: base + "images/HomeCare_VR.png",
     tags: ["Unity", "VR", "AI", "Convai"],
   },
   {
     title: "Multiplayer VR Helicopter Plugin",
     desc: "Server-authoritative multiplayer VR helicopter plugin in Unreal with replicated flight controls.",
-    video: base + "videos/Helicopter_Simulator.mp4",
+    video: base + "videos/Helicopter_Simulator_3.mp4",
     poster: base + "images/Helicopter.png",
     tags: ["Unreal", "VR", "Multiplayer", "Replication"],
   },
@@ -152,9 +151,7 @@ export default function App() {
     <main>
       <style>{css}</style>
       <Navbar />
-      <Suspense fallback={<div className="hero section" style={{ minHeight: "88vh" }} />}>
-        <Hero />
-      </Suspense>
+      <Hero />
       <WhoIAm />
       <FeaturedProjects />
       <Portfolio />
@@ -230,24 +227,59 @@ function Skills() {
 }
 
 function LazyVideo({ src, poster, title }) {
-  const [loaded, setLoaded] = useState(false);
+  const placeholderRef = useRef(null);
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [playRequested, setPlayRequested] = useState(false);
 
-  if (loaded) {
+  useEffect(() => {
+    const element = placeholderRef.current;
+    if (!element || !("IntersectionObserver" in window)) {
+      setIsNearViewport(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "400px 0px" },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  const requestPlayback = () => {
+    setIsNearViewport(true);
+    setPlayRequested(true);
+  };
+
+  if (playRequested && isNearViewport) {
     return (
-      <video controls autoPlay playsInline aria-label={`${title} video`}>
-        <source src={src} type="video/mp4" />
-      </video>
+      <video
+        src={src}
+        poster={poster}
+        controls
+        autoPlay
+        playsInline
+        preload="metadata"
+        aria-label={`${title} video`}
+      />
     );
   }
 
   return (
     <button
+      ref={placeholderRef}
       className="videoPlaceholder"
       type="button"
       aria-label={`Play ${title} video`}
-      onClick={() => setLoaded(true)}
+      onClick={requestPlayback}
     >
-      <img src={poster} alt="" className="videoThumb" />
+      <img src={poster} alt="" className="videoThumb" loading="lazy" decoding="async" fetchPriority="low" />
       <PlayCircle className="playIcon" aria-hidden="true" />
     </button>
   );
@@ -265,7 +297,7 @@ function Portfolio() {
               {project.video ? (
                 <LazyVideo src={project.video} poster={project.poster} title={project.title} />
               ) : (
-                <img src={project.image} alt={project.title} />
+                <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
               )}
               <h3>{project.title}</h3>
               <p>{project.desc}</p>
@@ -302,7 +334,7 @@ function FeaturedProjects() {
               {project.video ? (
                 <LazyVideo src={project.video} poster={project.poster} title={project.title} />
               ) : (
-                <img src={project.image} alt={project.title} />
+                <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
               )}
             </div>
             <h3>{project.title}</h3>

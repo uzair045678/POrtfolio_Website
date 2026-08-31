@@ -1,9 +1,8 @@
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
-import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const base = import.meta.env.BASE_URL || "/";
+const AvatarScene = lazy(() => import("./HeroAvatar.jsx"));
 
 function Socials() {
   return (
@@ -14,51 +13,40 @@ function Socials() {
   );
 }
 
-function AvatarModel({ onLoaded }) {
-  const group = useRef();
-  const { scene, animations } = useGLTF(base + "avatar_with_anim_formal.glb");
-  const { actions } = useAnimations(animations, group);
-
-  useEffect(() => {
-    onLoaded?.();
-    const action = actions?.[Object.keys(actions || {})[0]];
-    if (action) action.play();
-  }, [actions, onLoaded]);
-
-  return <primitive ref={group} object={scene} scale={2.5} position={[0, -3.6, 0]} />;
-}
-
-function AvatarScene({ onLoaded }) {
-  return (
-    <Canvas camera={{ position: [-17.889551863863957, 1.093526315702387, 24.790483188927276], fov: 5 }} gl={{ antialias: true }}>
-      <CameraDebugger />
-      <ambientLight intensity={1} color="white" />
-      <directionalLight position={[5, 5, 5]} intensity={10} color="white" />
-      <directionalLight position={[-5, -5, -5]} intensity={2} color="white" />
-      <directionalLight position={[5, 0, -5]} intensity={4} color="white" />
-      <Suspense fallback={null}>
-        <AvatarModel onLoaded={onLoaded} />
-      </Suspense>
-      <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0} />
-    </Canvas>
-  );
-}
-
-function CameraDebugger() {
-  const { camera, scene } = useThree();
-
-  useEffect(() => {
-    window.r3fCamera = camera;
-    window.r3fScene = scene;
-  }, [camera, scene]);
-
-  return null;
-}
-
 export default function Hero() {
   const [modelLoaded, setModelLoaded] = useState(false);
+  const [shouldLoadModel, setShouldLoadModel] = useState(false);
   const fallbackImg = base + "poster.webp";
   const handleModelLoaded = useCallback(() => setModelLoaded(true), []);
+
+  useEffect(() => {
+    let idleId;
+    let timeoutId;
+    let delayId;
+
+    const loadModelWhenIdle = () => {
+      delayId = window.setTimeout(() => {
+        if ("requestIdleCallback" in window) {
+          idleId = window.requestIdleCallback(() => setShouldLoadModel(true), { timeout: 2500 });
+        } else {
+          timeoutId = window.setTimeout(() => setShouldLoadModel(true), 500);
+        }
+      }, 2000);
+    };
+
+    if (document.readyState === "complete") {
+      loadModelWhenIdle();
+    } else {
+      window.addEventListener("load", loadModelWhenIdle, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", loadModelWhenIdle);
+      if (idleId !== undefined && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      if (delayId !== undefined) window.clearTimeout(delayId);
+    };
+  }, []);
 
   return (
     <section id="home" className="hero section">
@@ -78,9 +66,13 @@ export default function Hero() {
       </div>
       <div className="heroImageWrap">
         <div className="heroCanvasWrap" role="img" aria-label="Animated 3D avatar of Uzair Ahmad Mirza">
-          <img className={`heroFallbackImg ${modelLoaded ? "loaded" : ""}`} src={fallbackImg} alt="" />
+          <img className={`heroFallbackImg ${modelLoaded ? "loaded" : ""}`} src={fallbackImg} alt="" decoding="async" fetchPriority="high" />
           <div className={`heroCanvasInner ${modelLoaded ? "loaded" : ""}`}>
-            <AvatarScene onLoaded={handleModelLoaded} />
+            {shouldLoadModel && (
+              <Suspense fallback={null}>
+                <AvatarScene onLoaded={handleModelLoaded} />
+              </Suspense>
+            )}
           </div>
         </div>
       </div>

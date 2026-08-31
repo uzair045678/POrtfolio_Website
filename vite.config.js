@@ -9,7 +9,20 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules/@react-three') || id.includes('node_modules/three')) {
+          const normalizedId = id.replaceAll('\\', '/')
+
+          if (
+            normalizedId.includes('/node_modules/react/') ||
+            normalizedId.includes('/node_modules/react-dom/') ||
+            normalizedId.includes('/node_modules/scheduler/')
+          ) {
+            return 'react-vendor'
+          }
+
+          if (
+            normalizedId.includes('/node_modules/@react-three/') ||
+            normalizedId.includes('/node_modules/three/')
+          ) {
             return 'three-vendor';
           }
         },
