@@ -9,7 +9,6 @@ import {
   Cpu,
   Box,
   PlayCircle,
-  User,
   Briefcase,
 } from "lucide-react";
 import { FaLinkedin, FaGithub, FaGooglePlay } from "react-icons/fa";
@@ -28,7 +27,7 @@ const portfolioProjects = [
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
-    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics.Also implemented player seaat assignment, detachment, and Ownership transfer mode from Pilot to Co-pilot using C++ and Blueprints.",
+    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics. I also implemented player seat assignment, detachment, and ownership transfer from pilot to co-pilot using C++ and Blueprints.",
     video: base + "videos/Helicopter_Simulator.mp4",
     poster: base + "images/Helicopter.png",
     tags: ["Unreal Engine 5", "C++", "Multiplayer"],
@@ -49,7 +48,7 @@ const portfolioProjects = [
   },
   {
     title: "AR Media Platform",
-    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR Image Targets at Runtime and the content to render on it (currently supports video.",
+    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
     image: base + "images/AR_Media_Platform_1.png",
     tags: ["Unity", "Vuforia", "AR", "OpenCV"],
   },
@@ -135,9 +134,9 @@ const featuredProjects = [
   },
   {
     title: "AR Media Platform",
-    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR Image Targets at Runtime and the content to render on it (currently supports video.",
+    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
     image: base + "images/AR_Media_Platform_1.png",
-    tags: ["Unity", "Mobile", "Puzzle"],
+    tags: ["Unity", "Vuforia", "AR", "OpenCV"],
   },
 ];
 
@@ -170,7 +169,7 @@ function Navbar() {
   return (
     <header className="navbar">
       <a href="#home" className="logo">Uzair Ahmad<span> - Portfolio</span></a>
-      <nav>
+      <nav aria-label="Primary navigation">
         <a href="#home">Home</a>
         <a href="#about">About Me</a>
         <a href="#portfolio">Portfolio</a>
@@ -195,9 +194,9 @@ function WhoIAm() {
           <div className="contactLine"><Phone size={16} /> +92-3341574422</div>
           <div className="contactLine"><MapPin size={16} /> Islamabad, Pakistan</div>
           <div className="contactLine">
-            <a href="https://www.linkedin.com/in/uzair-ahmad-mirza-b939a21a2/" target="_blank" style={{ color: "var(--cyan)" }}>LinkedIn</a>
+            <a href="https://www.linkedin.com/in/uzair-ahmad-mirza-b939a21a2/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>LinkedIn</a>
             <span style={{ color: "var(--muted)" }}> / </span>
-            <a href="https://github.com/uzair045678" target="_blank" style={{ color: "var(--cyan)" }}>GitHub</a>
+            <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>GitHub</a>
           </div>
         </div>
         <Stat icon={<Briefcase />} value="3+" label="Years Experience" />
@@ -230,22 +229,27 @@ function Skills() {
   );
 }
 
-function LazyVideo({ src, poster }) {
+function LazyVideo({ src, poster, title }) {
   const [loaded, setLoaded] = useState(false);
 
   if (loaded) {
     return (
-      <video controls autoPlay>
+      <video controls autoPlay playsInline aria-label={`${title} video`}>
         <source src={src} type="video/mp4" />
       </video>
     );
   }
 
   return (
-    <div className="videoPlaceholder" onClick={() => setLoaded(true)}>
+    <button
+      className="videoPlaceholder"
+      type="button"
+      aria-label={`Play ${title} video`}
+      onClick={() => setLoaded(true)}
+    >
       <img src={poster} alt="" className="videoThumb" />
-      <PlayCircle className="playIcon" />
-    </div>
+      <PlayCircle className="playIcon" aria-hidden="true" />
+    </button>
   );
 }
 
@@ -259,7 +263,7 @@ function Portfolio() {
           const card = (
             <article className="projectCard">
               {project.video ? (
-                <LazyVideo src={project.video} poster={project.poster} />
+                <LazyVideo src={project.video} poster={project.poster} title={project.title} />
               ) : (
                 <img src={project.image} alt={project.title} />
               )}
@@ -267,14 +271,14 @@ function Portfolio() {
               <p>{project.desc}</p>
               <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
               {project.link && (
-                <span className="storeBtn" onClick={(e) => { e.stopPropagation(); window.open(project.link, '_blank', 'noopener,noreferrer'); }}>
-                  <FaGooglePlay /> Play Store
+                <span className="storeBtn">
+                  <FaGooglePlay aria-hidden="true" /> Play Store
                 </span>
               )}
             </article>
           );
           return project.link ? (
-            <a href={project.link} target="_blank" rel="noopener noreferrer" key={project.title} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+            <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on Google Play`} key={project.title} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
               {card}
             </a>
           ) : (
@@ -296,7 +300,7 @@ function FeaturedProjects() {
           <article className="videoCard" key={project.title}>
             <div className="videoBox">
               {project.video ? (
-                <LazyVideo src={project.video} poster={project.poster} />
+                <LazyVideo src={project.video} poster={project.poster} title={project.title} />
               ) : (
                 <img src={project.image} alt={project.title} />
               )}
@@ -317,13 +321,18 @@ function Contact() {
       <h2 className="sectionTitle">Contact <span>Me</span></h2>
       <form className="contactForm" onSubmit={(e) => e.preventDefault()}>
         <div className="inputGroup">
-          <input placeholder="Full Name" />
-          <input placeholder="E-mail id" />
-          <input placeholder="Phone Number" />
-          <input placeholder="Subject" />
+          <label className="srOnly" htmlFor="contact-name">Full name</label>
+          <input id="contact-name" name="name" type="text" autoComplete="name" placeholder="Full Name" />
+          <label className="srOnly" htmlFor="contact-email">Email address</label>
+          <input id="contact-email" name="email" type="email" autoComplete="email" placeholder="Email Address" />
+          <label className="srOnly" htmlFor="contact-phone">Phone number</label>
+          <input id="contact-phone" name="phone" type="tel" autoComplete="tel" placeholder="Phone Number" />
+          <label className="srOnly" htmlFor="contact-subject">Subject</label>
+          <input id="contact-subject" name="subject" type="text" placeholder="Subject" />
         </div>
         <div className="messageGroup">
-          <textarea placeholder="Your Message" />
+          <label className="srOnly" htmlFor="contact-message">Your message</label>
+          <textarea id="contact-message" name="message" placeholder="Your Message" />
           <button className="btn primary" type="submit"><Send size={16} /> Send Message</button>
         </div>
       </form>
@@ -335,13 +344,13 @@ function Footer() {
   return (
     <footer>
       <Socials />
-      <div className="footerLinks">
+      <nav className="footerLinks" aria-label="Footer navigation">
         <a href="#home">Home</a>
         <a href="#about">About Me</a>
         <a href="#portfolio">Portfolio</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
-      </div>
+      </nav>
       <p>© Uzair Ahmad Mirza | All Rights Reserved</p>
     </footer>
   );
@@ -350,8 +359,8 @@ function Footer() {
 function Socials() {
   return (
     <div className="socials">
-      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank"><FaLinkedin size={20} /></a>
-      <a href="https://github.com/uzair045678" target="_blank"><FaGithub size={20} /></a>
+      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on LinkedIn"><FaLinkedin size={20} aria-hidden="true" /></a>
+      <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on GitHub"><FaGithub size={20} aria-hidden="true" /></a>
     </div>
   );
 }
@@ -371,15 +380,17 @@ const css = `
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, Arial, sans-serif; }
 a { color: inherit; text-decoration: none; }
-.section { padding: 90px 12%; }
+.section { padding: 90px 12%; scroll-margin-top: 100px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
 .label { color: var(--cyan); letter-spacing: 3px; font-size: 12px; text-align: center; margin: 0 0 8px; }
 .sectionTitle { text-align: center; font-size: clamp(36px, 5vw, 64px); margin: 0 0 55px; line-height: 1; }
 .sectionTitle span, .logo span, .hero h1 span, .hero h2 span { color: var(--cyan); text-shadow: 0 0 30px rgba(0,255,240,.55); }
 .navbar { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 24px 12%; background: rgba(0,0,0,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.05); }
 .logo { font-size: 28px; font-weight: 800; }
 nav { display: flex; gap: 34px; }
-nav a { font-size: 15px; transition: .3s; }
-nav a:hover { color: var(--cyan); }
+nav a { min-height: 44px; padding: 8px 4px; display: inline-flex; align-items: center; font-size: 15px; transition: .3s; }
+nav a:hover, nav a:focus-visible { color: var(--cyan); }
 .hero { min-height: 88vh; display: grid; grid-template-columns: 1.05fr .95fr; gap: 80px; align-items: center; }
 .hero h1 { font-size: clamp(44px, 6vw, 78px); margin: 0; }
 .hero h2 { font-size: clamp(26px, 4vw, 42px); margin: 8px 0 20px; }
@@ -400,11 +411,12 @@ nav a:hover { color: var(--cyan); }
 .outline { color: var(--cyan); background: transparent; }
 .about { background: #080808; }
 .aboutGrid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 22px; max-width: 1050px; margin: auto; }
+.aboutGrid > * { min-width: 0; }
 .aboutCard, .stat, .skillCard, .projectCard, .videoCard { background: linear-gradient(145deg, var(--card), #0b0b0b); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; }
 .aboutCard.large { grid-row: span 2; padding: 32px; }
 .aboutCard p { color: var(--muted); line-height: 1.8; }
-.contactLine { margin-top: 16px; padding: 12px 14px; background: var(--card2); border-radius: 8px; color: var(--muted); display: flex; gap: 10px; align-items: center; font-size: 14px; }
-.contactLine svg { color: var(--cyan); }
+.contactLine { margin-top: 16px; padding: 12px 14px; background: var(--card2); border-radius: 8px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; overflow-wrap: anywhere; font-size: 14px; }
+.contactLine svg { flex: 0 0 auto; color: var(--cyan); }
 .stat { min-height: 150px; display: grid; place-items: center; text-align: center; padding: 22px; }
 .stat span { width: 42px; height: 42px; border-radius: 10px; background: rgba(0,255,240,.12); color: var(--cyan); display: grid; place-items: center; }
 .stat h3 { font-size: 30px; margin: 10px 0 0; }
@@ -430,7 +442,7 @@ nav a:hover { color: var(--cyan); }
 .videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
 .videoBox video, .videoBox img { width: 100%; height: 210px; object-fit: cover; display: block; }
 .videoBox .videoPlaceholder { width: 100%; height: 210px; }
-.videoPlaceholder { position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.videoPlaceholder { position: relative; padding: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .videoThumb { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.7); transition: filter .3s; }
 .videoPlaceholder:hover .videoThumb { filter: brightness(.5); }
 .videoPlaceholder:hover .playIcon { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
@@ -448,7 +460,7 @@ footer p { margin: 0; }
 @media (max-width: 980px) {
   .navbar { padding: 18px 6%; flex-direction: column; gap: 18px; }
   nav { gap: 18px; flex-wrap: wrap; justify-content: center; }
-  .section { padding: 70px 6%; }
+  .section { padding: 70px 6%; scroll-margin-top: 150px; }
   .hero { grid-template-columns: 1fr; text-align: center; gap: 45px; }
   .heroText p { margin-inline: auto; }
   .socials, .buttons { justify-content: center; }
@@ -456,10 +468,18 @@ footer p { margin: 0; }
   .aboutCard.large { grid-row: auto; }
 }
 @media (max-width: 560px) {
-  nav a { font-size: 14px; }
+  .navbar { position: static; }
+  nav { gap: 4px 10px; }
+  nav a { padding-inline: 3px; font-size: 14px; }
   .logo { font-size: 24px; }
+  .section { scroll-margin-top: 20px; }
   .sectionTitle { margin-bottom: 35px; }
-  .heroImageWrap { width: 280px; }
+  .heroImageWrap { width: min(280px, 100%); }
+  .aboutCard.large, .projectCard, .videoCard, .skillCard { padding: 20px; }
   input, textarea { border-radius: 14px; padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 `;

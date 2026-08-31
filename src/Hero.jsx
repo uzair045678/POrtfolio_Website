@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
@@ -8,8 +8,8 @@ const base = import.meta.env.BASE_URL || "/";
 function Socials() {
   return (
     <div className="socials">
-      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank"><FaLinkedin size={20} /></a>
-      <a href="https://github.com/uzair045678" target="_blank"><FaGithub size={20} /></a>
+      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on LinkedIn"><FaLinkedin size={20} aria-hidden="true" /></a>
+      <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on GitHub"><FaGithub size={20} aria-hidden="true" /></a>
     </div>
   );
 }
@@ -23,7 +23,7 @@ function AvatarModel({ onLoaded }) {
     onLoaded?.();
     const action = actions?.[Object.keys(actions || {})[0]];
     if (action) action.play();
-  }, [actions]);
+  }, [actions, onLoaded]);
 
   return <primitive ref={group} object={scene} scale={2.5} position={[0, -3.6, 0]} />;
 }
@@ -58,6 +58,7 @@ function CameraDebugger() {
 export default function Hero() {
   const [modelLoaded, setModelLoaded] = useState(false);
   const fallbackImg = base + "poster.webp";
+  const handleModelLoaded = useCallback(() => setModelLoaded(true), []);
 
   return (
     <section id="home" className="hero section">
@@ -71,15 +72,15 @@ export default function Hero() {
         </p>
         <Socials />
         <div className="buttons">
-          <a className="btn primary" href="https://drive.google.com/file/d/1SFvy9tz3M3zbPICQiOPr3EyrsOMCE05q/view?usp=drive_link" target="_blank">Check my CV</a>
+          <a className="btn primary" href="https://drive.google.com/file/d/1SFvy9tz3M3zbPICQiOPr3EyrsOMCE05q/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Check my CV</a>
           <a className="btn outline" href="#contact">Contact Me</a>
         </div>
       </div>
       <div className="heroImageWrap">
-        <div className="heroCanvasWrap">
+        <div className="heroCanvasWrap" role="img" aria-label="Animated 3D avatar of Uzair Ahmad Mirza">
           <img className={`heroFallbackImg ${modelLoaded ? "loaded" : ""}`} src={fallbackImg} alt="" />
           <div className={`heroCanvasInner ${modelLoaded ? "loaded" : ""}`}>
-            <AvatarScene onLoaded={() => setModelLoaded(true)} />
+            <AvatarScene onLoaded={handleModelLoaded} />
           </div>
         </div>
       </div>
