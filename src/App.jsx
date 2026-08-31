@@ -51,7 +51,7 @@ const portfolioProjects = [
     title: "AR Media Platform",
     desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR Image Targets at Runtime and the content to render on it (currently supports video.",
     image: base + "images/AR_Media_Platform_1.png",
-    tags: ["Unity", "Vuforia", "AR"],
+    tags: ["Unity", "Vuforia", "AR", "OpenCV"],
   },
   {
     title: "Virtual Hajj VR Tour",
@@ -82,8 +82,8 @@ const portfolioProjects = [
   
   
   {
-    title: "Multiplayer Robot Simulation",
-    desc: "Unity + Firebase(Realtime FB) system syncing movement inputs and stats with real-world robot players in real-time.",
+    title: "RoboSync — Real-Time Robot Control & Telemetry System",
+    desc: "Unity-based PC application for controlling Arduino robots, synchronizing live battle telemetry, supporting local multiplayer through Mirror Networking, and integrating Firebase Realtime Database for communication between physical robots and the application.",
     image: base + "images/Robot SImulation2.jpg",
     tags: ["Unity", "Firebase", "Multiplayer"],
   },
@@ -202,7 +202,6 @@ function WhoIAm() {
         </div>
         <Stat icon={<Briefcase />} value="3+" label="Years Experience" />
         <Stat icon={<Code2 />} value="20+" label="Projects Completed" />
-        <Stat icon={<Cpu />} value="24/7" label="Support" />
       </div>
     </section>
   );
