@@ -65,6 +65,10 @@ export default function Hero() {
         </div>
       </div>
       <div className="heroImageWrap">
+        <span className="openToWorkBadge">
+          <span className="openToWorkDot" aria-hidden="true" />
+          Open to Work
+        </span>
         <div className="heroCanvasWrap" role="img" aria-label="Animated 3D avatar of Uzair Ahmad Mirza">
           <img className={`heroFallbackImg ${modelLoaded ? "loaded" : ""}`} src={fallbackImg} alt="" decoding="async" fetchPriority="high" />
           <div className={`heroCanvasInner ${modelLoaded ? "loaded" : ""}`}>

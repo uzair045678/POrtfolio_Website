@@ -82,7 +82,7 @@ const portfolioProjects = [
   {
     title: "Web AR Object Placement",
     desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
-    image: base + "images/WebAR_Object_Placement.png",
+    image: base + "images/WebAR_Objcet_Placement.png",
     categories: ["AR"],
   },
   
@@ -469,7 +469,9 @@ nav a:hover, nav a:focus-visible { color: var(--cyan); }
 .hero h1 { font-size: clamp(44px, 6vw, 78px); margin: 0; }
 .hero h2 { font-size: clamp(26px, 4vw, 42px); margin: 8px 0 20px; }
 .hero p { max-width: 650px; color: var(--text); line-height: 1.8; font-weight: 600; }
-.heroImageWrap { justify-self: center; width: min(430px, 82vw); aspect-ratio: 1; border-radius: 50%; padding: 7px; background: var(--cyan); box-shadow: 0 0 38px rgba(0,255,240,.7); overflow: hidden; }
+.heroImageWrap { position: relative; justify-self: center; width: min(430px, 82vw); aspect-ratio: 1; border-radius: 50%; padding: 7px; background: var(--cyan); box-shadow: 0 0 38px rgba(0,255,240,.7); }
+.openToWorkBadge { position: absolute; top: -74px; right: -80px; z-index: 2; display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; border: 2px solid var(--cyan); border-radius: 999px; background: var(--cyan); color: #050505; box-shadow: 0 0 32px rgba(0,255,240,.55); font-size: 24px; font-weight: 800; line-height: 1.2; letter-spacing: .4px; white-space: nowrap; }
+.openToWorkDot { width: 12px; height: 12px; flex-shrink: 0; border-radius: 50%; background: #050505; box-shadow: 0 0 0 4px rgba(5,5,5,.12); }
 .heroCanvasWrap { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #00fff0a6; }
 .heroCanvasWrap canvas { display: block; width: 100% !important; height: 100% !important; }
 .heroFallbackImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.6s; z-index: 1; }
@@ -537,12 +539,17 @@ footer { background: #111; text-align: center; padding: 40px 12%; }
 footer .socials { justify-content: center; margin-top: 0; }
 .footerLinks { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin: 24px 0 34px; }
 footer p { margin: 0; }
+@media (max-width: 1200px) {
+  .openToWorkBadge { right: 0; }
+}
 @media (max-width: 980px) {
   .navbar { padding: 18px 6%; flex-direction: column; gap: 18px; }
   nav { gap: 18px; flex-wrap: wrap; justify-content: center; }
   .section { padding: 70px 6%; scroll-margin-top: 150px; }
   .hero { grid-template-columns: 1fr; text-align: center; gap: 45px; }
   .heroText p { margin-inline: auto; }
+  .heroImageWrap { margin-top: 20px; }
+  .openToWorkBadge { top: -30px; font-size: 20px; padding: 13px 22px; }
   .socials, .buttons { justify-content: center; }
   .aboutGrid, .skillsGrid, .projectGrid, .videoGrid, .contactForm { grid-template-columns: 1fr; }
   .aboutCard.large { grid-row: auto; }
