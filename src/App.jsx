@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Mail,
   Phone,
@@ -12,6 +12,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import { FaLinkedin, FaGithub, FaGooglePlay } from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
 import Hero from "./Hero.jsx";
 
 const base = import.meta.env.BASE_URL || "/";
@@ -22,74 +23,74 @@ const portfolioProjects = [
     desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
     video: base + "videos/HomeCare_Safety_VR_3.mp4",
     poster: base + "images/HomeCare_VR.png",
-    tags: ["Unity", "VR", "AI", "Convai"],
+    categories: ["Unity", "VR", "AI"],
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
     desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics. I also implemented player seat assignment, detachment, and ownership transfer from pilot to co-pilot using C++ and Blueprints.",
     video: base + "videos/Helicopter_Simulator_3.mp4",
     poster: base + "images/Helicopter.png",
-    tags: ["Unreal Engine 5", "C++", "Multiplayer"],
+    categories: ["Unreal Engine", "VR", "Multiplayer"],
   },
   {
     title: "Immersive Mecanno VR (FYP)",
     desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
     video: base + "videos/Immersive_Mecanno_VR_2.mp4",
     poster: base + "images/Mecano_VR.png",
-    tags: ["Unity", "VR", "C#"],
+    categories: ["Unity", "VR"],
   },
   {
     title: "Endless Runner Game (Unreal Engine 5)",
     desc: "UE5 endless runner with dynamic obstacle generation and power-ups.",
     video: base + "videos/EndlessRunnerGame_2.mp4",
     poster: base + "images/RunnerGame.png",
-    tags: ["Unreal Engine 5", "Game"],
+    categories: ["Unreal Engine", "Games"],
   },
   {
     title: "AR Media Platform",
     desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
     image: base + "images/AR_Media_Platform_1.png",
-    tags: ["Unity", "Vuforia", "AR", "OpenCV"],
+    categories: ["Unity", "AR"],
   },
   {
     title: "Virtual Hajj VR Tour",
     desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
     image: base + "images/Virtual Hajj Tour 3.jpg",
-    tags: ["Unreal", "VR", "Multiplayer"],
+    categories: ["Unreal Engine", "VR", "Simulation"],
   },
-
-  /*{
-    title: "Web AR Object Placement",
-    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
-    tags: ["WebAR", "AR Foundation", "WebXR"],
-  },*/
   
   {
     title: "AR Measurement App",
     desc: "AR app that uses plane detection and spatial mapping to measure real-world objects and distances with high accuracy.",
     image: base + "images/AR_Measurement_App_1.png",
-    tags: ["AR", "Unity", "AR Foundation"],
+    categories: ["Unity", "AR"],
   },
-  /*{
+  {
     title: "AR Portfolio Contact Card",
     desc: "Scannable AR contact card overlaying 3D portfolio content for interactive networking.",
-    image: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=900&auto=format&fit=crop",
-    tags: ["AR", "Unity", "Vuforia"],
-  },*/
-  
+    image: base + "images/AR_Contact_Card.png",
+    categories: ["Unity", "AR"],
+  },
+
+  {
+    title: "AR Weather App",
+    desc: "Fetches weather via API and displays it in an interactive AR interface with 3D weather models.",
+    image: base + "images/AR_Weather.jfif",
+    categories: ["Unity", "AR"],
+  },
+
+  {
+    title: "Web AR Object Placement",
+    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
+    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
+    categories: ["AR"],
+  },
   
   {
     title: "RoboSync — Real-Time Robot Control & Telemetry System",
     desc: "Unity-based PC application for controlling Arduino robots, synchronizing live battle telemetry, supporting local multiplayer through Mirror Networking, and integrating Firebase Realtime Database for communication between physical robots and the application.",
     image: base + "images/Robot SImulation2.jpg",
-    tags: ["Unity", "Firebase", "Multiplayer"],
-  },
-  {
-    title: "AR Weather App",
-    desc: "Fetches weather via API and displays it in an interactive AR interface with 3D weather models.",
-    image: base + "images/AR_Weather.jfif",
-    tags: ["Unity", "AR", "API"],
+    categories: ["Unity", "Multiplayer", "Simulation"],
   },
   
   {
@@ -97,21 +98,21 @@ const portfolioProjects = [
     link: "https://play.google.com/store/apps/details?id=com.XRDigital.DotConnect",
     desc: "Android puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics.",
     image: base + "images/ColorCOnnect_1.png",
-    tags: ["Unity", "Mobile", "Puzzle"],
+    categories: ["Unity", "Mobile", "Games"],
   },
   {
     title: "Ricochet Monster Mobile Game",
     link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.Monster2",
     desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
     image: base + "images/RicochetMonster.png",
-    tags: ["Unity", "Mobile", "Live Ops"],
+    categories: ["Unity", "Mobile", "Games"],
   },
   {
     title: "Mob Rushers Mobile Game",
     link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.RunnerClash",
     desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
     image: base + "images/MobRushers.png",
-    tags: ["Unity", "Mobile", "Live Ops"],
+    categories: ["Unity", "Mobile", "Games"],
   },
   
 ];
@@ -122,20 +123,20 @@ const featuredProjects = [
     desc: "Unity VR simulator with Convai for home safety hazard detection and AI-driven elder avatar training.",
     video: base + "videos/HomeCare_Safety_VR_3.mp4",
     poster: base + "images/HomeCare_VR.png",
-    tags: ["Unity", "VR", "AI", "Convai"],
+    categories: ["Unity", "VR/AR", "AI"],
   },
   {
     title: "Multiplayer VR Helicopter Plugin",
     desc: "Server-authoritative multiplayer VR helicopter plugin in Unreal with replicated flight controls.",
     video: base + "videos/Helicopter_Simulator_3.mp4",
     poster: base + "images/Helicopter.png",
-    tags: ["Unreal", "VR", "Multiplayer", "Replication"],
+    categories: ["Unreal Engine", "VR/AR", "Multiplayer"],
   },
   {
     title: "AR Media Platform",
     desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
     image: base + "images/AR_Media_Platform_1.png",
-    tags: ["Unity", "Vuforia", "AR", "OpenCV"],
+    categories: ["Unity", "VR/AR"],
   },
 ];
 
@@ -286,40 +287,79 @@ function LazyVideo({ src, poster, title }) {
 }
 
 function Portfolio() {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const categories = [
+    "All",
+    ...new Set(portfolioProjects.flatMap((project) => project.categories)),
+  ];
+  const visibleProjects = activeCategory === "All"
+    ? portfolioProjects
+    : portfolioProjects.filter((project) => project.categories.includes(activeCategory));
+
   return (
     <section id="portfolio" className="section portfolio">
       <p className="label">PORTFOLIO</p>
       <h2 className="sectionTitle">Portfolio <span>Projects</span></h2>
-      <div className="projectGrid">
-        {portfolioProjects.map((project) => {
-          const card = (
-            <article className="projectCard">
-              {project.video ? (
-                <LazyVideo src={project.video} poster={project.poster} title={project.title} />
-              ) : (
-                <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
-              )}
-              <h3>{project.title}</h3>
-              <p>{project.desc}</p>
-              <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-              {project.link && (
-                <span className="storeBtn">
-                  <FaGooglePlay aria-hidden="true" /> Play Store
-                </span>
-              )}
-            </article>
-          );
-          return project.link ? (
-            <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on Google Play`} key={project.title} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-              {card}
-            </a>
-          ) : (
-            <Fragment key={project.title}>{card}</Fragment>
-          );
-        })}
+      <div className="categoryFilters" role="group" aria-label="Filter portfolio projects by category">
+        {categories.map((category) => (
+          <button
+            className={`categoryFilter${activeCategory === category ? " active" : ""}`}
+            type="button"
+            aria-pressed={activeCategory === category}
+            onClick={() => setActiveCategory(category)}
+            key={category}
+          >
+            {category}
+          </button>
+        ))}
       </div>
+      <motion.div className="projectGrid" layout>
+        <AnimatePresence mode="popLayout">
+          {visibleProjects.map((project) => (
+            <motion.div
+              className="projectGridItem"
+              key={project.title}
+              layout
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.94 }}
+              transition={{ duration: 0.24, ease: "easeOut" }}
+            >
+              <ProjectCard project={project} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </section>
   );
+}
+
+function ProjectCard({ project }) {
+  const card = (
+    <article className="projectCard">
+      {project.video ? (
+        <LazyVideo src={project.video} poster={project.poster} title={project.title} />
+      ) : (
+        <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
+      )}
+      <h3>{project.title}</h3>
+      <p>{project.desc}</p>
+      <div className="categories" aria-label="Project categories">
+        {project.categories.map((category) => <span key={category}>{category}</span>)}
+      </div>
+      {project.link && (
+        <span className="storeBtn">
+          <FaGooglePlay aria-hidden="true" /> Play Store
+        </span>
+      )}
+    </article>
+  );
+
+  return project.link ? (
+    <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on Google Play`} className="projectLink">
+      {card}
+    </a>
+  ) : card;
 }
 
 function FeaturedProjects() {
@@ -339,7 +379,9 @@ function FeaturedProjects() {
             </div>
             <h3>{project.title}</h3>
             <p>{project.desc}</p>
-            <div className="tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+            <div className="categories" aria-label="Project categories">
+              {project.categories.map((category) => <span key={category}>{category}</span>)}
+            </div>
           </article>
         ))}
       </div>
@@ -457,11 +499,17 @@ nav a:hover, nav a:focus-visible { color: var(--cyan); }
 .skillCard { padding: 28px; }
 .skillCard h3 { display: flex; align-items: center; gap: 14px; margin-top: 0; }
 .skillCard h3 span { color: var(--cyan); width: 42px; height: 42px; display: grid; place-items: center; background: rgba(0,255,240,.1); border-radius: 12px; }
-.skillTags, .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-.skillTags span, .tags span { background: #1c1c1c; border: 1px solid rgba(255,255,255,.09); border-radius: 7px; padding: 9px 13px; color: var(--muted); font-size: 14px; }
+.skillTags, .categories { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.skillTags span, .categories span { background: #1c1c1c; border: 1px solid rgba(255,255,255,.09); border-radius: 7px; padding: 9px 13px; color: var(--muted); font-size: 14px; }
 .portfolio { background: #101010; }
+.categoryFilters { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin: -20px auto 36px; }
+.categoryFilter { flex: 0 0 auto; min-height: 42px; padding: 10px 20px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: #191919; color: var(--muted); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: background-color .25s, border-color .25s, color .25s, box-shadow .25s, transform .25s; }
+.categoryFilter:hover { color: var(--text); border-color: var(--border); transform: translateY(-2px); }
+.categoryFilter.active { background: var(--cyan); border-color: var(--cyan); color: #050505; box-shadow: 0 0 22px rgba(0,255,240,.28); }
 .projectGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.projectGridItem, .projectLink { display: block; height: 100%; min-width: 0; color: inherit; text-decoration: none; }
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
+.projectCard { height: 100%; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
 .projectCard img, .projectCard .videoPlaceholder { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard video { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
@@ -506,6 +554,8 @@ footer p { margin: 0; }
   .logo { font-size: 24px; }
   .section { scroll-margin-top: 20px; }
   .sectionTitle { margin-bottom: 35px; }
+  .categoryFilters { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; margin: -8px -6vw 30px; padding: 4px 6vw 12px; scrollbar-width: thin; scrollbar-color: var(--cyan) transparent; }
+  .categoryFilter { min-height: 44px; }
   .heroImageWrap { width: min(280px, 100%); }
   .aboutCard.large, .projectCard, .videoCard, .skillCard { padding: 20px; }
   input, textarea { border-radius: 14px; padding: 18px; }
