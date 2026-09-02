@@ -82,7 +82,7 @@ const portfolioProjects = [
   {
     title: "Web AR Object Placement",
     desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=900&auto=format&fit=crop",
+    image: base + "images/WebAR_Object_Placement.png",
     categories: ["AR"],
   },
   
