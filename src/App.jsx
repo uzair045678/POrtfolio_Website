@@ -22,74 +22,74 @@ const portfolioProjects = [
     title: "HomeCare Safety VR Simulator",
     desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
     video: base + "videos/HomeCare_Safety_VR_3.mp4",
-    poster: base + "images/HomeCare_VR.png",
+    poster: base + "images/homecare-vr.webp",
     categories: ["Unity", "VR", "AI"],
   },
   {
     title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
     desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics. I also implemented player seat assignment, detachment, and ownership transfer from pilot to co-pilot using C++ and Blueprints.",
     video: base + "videos/Helicopter_Simulator_3.mp4",
-    poster: base + "images/Helicopter.png",
+    poster: base + "images/helicopter.webp",
     categories: ["Unreal Engine", "VR", "Multiplayer"],
   },
   {
     title: "Immersive Mecanno VR (FYP)",
     desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
     video: base + "videos/Immersive_Mecanno_VR_2.mp4",
-    poster: base + "images/Mecano_VR.png",
+    poster: base + "images/mecano-vr.webp",
     categories: ["Unity", "VR"],
   },
   {
     title: "Endless Runner Game (Unreal Engine 5)",
     desc: "UE5 endless runner with dynamic obstacle generation and power-ups.",
     video: base + "videos/EndlessRunnerGame_2.mp4",
-    poster: base + "images/RunnerGame.png",
+    poster: base + "images/runner-game.webp",
     categories: ["Unreal Engine", "Games"],
   },
   {
     title: "AR Media Platform",
     desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
-    image: base + "images/AR_Media_Platform_1.png",
+    image: base + "images/ar-media-platform.webp",
     categories: ["Unity", "AR"],
   },
   {
     title: "Virtual Hajj VR Tour",
     desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: base + "images/Virtual Hajj Tour 3.jpg",
+    image: base + "images/virtual-hajj-tour.webp",
     categories: ["Unreal Engine", "VR", "Simulation"],
   },
   
   {
     title: "AR Measurement App",
     desc: "AR app that uses plane detection and spatial mapping to measure real-world objects and distances with high accuracy.",
-    image: base + "images/AR_Measurement_App_1.png",
+    image: base + "images/ar-measurement-app.webp",
     categories: ["Unity", "AR"],
   },
   {
     title: "AR Portfolio Contact Card",
     desc: "Scannable AR contact card overlaying 3D portfolio content for interactive networking.",
-    image: base + "images/AR_Contact_Card.png",
+    image: base + "images/ar-contact-card.webp",
     categories: ["Unity", "AR"],
   },
 
   {
     title: "AR Weather App",
     desc: "Fetches weather via API and displays it in an interactive AR interface with 3D weather models.",
-    image: base + "images/AR_Weather.jfif",
+    image: base + "images/ar-weather.webp",
     categories: ["Unity", "AR"],
   },
 
   {
     title: "Web AR Object Placement",
     desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
-    image: base + "images/WebAR_Objcet_Placement.png",
+    image: base + "images/webar-object-placement.webp",
     categories: ["AR"],
   },
   
   {
     title: "RoboSync — Real-Time Robot Control & Telemetry System",
     desc: "Unity-based PC application for controlling Arduino robots, synchronizing live battle telemetry, supporting local multiplayer through Mirror Networking, and integrating Firebase Realtime Database for communication between physical robots and the application.",
-    image: base + "images/Robot SImulation2.jpg",
+    image: base + "images/robot-simulation.webp",
     categories: ["Unity", "Multiplayer", "Simulation"],
   },
   
@@ -97,21 +97,21 @@ const portfolioProjects = [
     title: "Color Connect – Line Puzzle",
     link: "https://play.google.com/store/apps/details?id=com.XRDigital.DotConnect",
     desc: "Android puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics.",
-    image: base + "images/ColorCOnnect_1.png",
+    image: base + "images/color-connect.webp",
     categories: ["Unity", "Mobile", "Games"],
   },
   {
     title: "Ricochet Monster Mobile Game",
     link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.Monster2",
     desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
-    image: base + "images/RicochetMonster.png",
+    image: base + "images/ricochet-monster.webp",
     categories: ["Unity", "Mobile", "Games"],
   },
   {
     title: "Mob Rushers Mobile Game",
     link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.RunnerClash",
     desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
-    image: base + "images/MobRushers.png",
+    image: base + "images/mob-rushers.webp",
     categories: ["Unity", "Mobile", "Games"],
   },
   
@@ -121,19 +121,19 @@ const featuredProjects = [
   {
     title: "Virtual Hajj VR Tour",
     desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: base + "images/Virtual Hajj Tour 3.jpg",
-    categories: ["Unreal Engine", "VR/AR", "Simulation"],
+    image: base + "images/virtual-hajj-tour.webp",
+    categories: ["Unreal Engine", "VR", "Simulation"],
   },
   {
     title: "RoboSync — Real-Time Robot Control & Telemetry",
     desc: "Unity PC app for controlling Arduino robots with live battle telemetry, Mirror Networking multiplayer, and Firebase integration.",
-    image: base + "images/Robot SImulation2.jpg",
-    categories: ["Unity", "VR/AR", "Multiplayer"],
+    image: base + "images/robot-simulation.webp",
+    categories: ["Unity", "Multiplayer", "Simulation"],
   },
   {
     title: "AR Media Platform",
     desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
-    image: base + "images/AR_Media_Platform_1.png",
+    image: base + "images/ar-media-platform.webp",
     categories: ["Unity", "AR"],
   },
 ];
@@ -397,6 +397,7 @@ function FeaturedProjects() {
             key={project.title}
             initial={{ opacity: 0, scale: 0.94 }}
             whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{ y: -8 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
           >
@@ -420,15 +421,40 @@ function FeaturedProjects() {
 }
 
 function Contact() {
+  const [status, setStatus] = useState("idle");
+
+  const submit = async (event) => {
+    event.preventDefault();
+    setStatus("sending");
+
+    try {
+      const form = event.currentTarget;
+      const response = await fetch("https://formsubmit.co/ajax/uzair12ahmad34@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...Object.fromEntries(new FormData(form)),
+          _subject: "New portfolio contact message",
+        }),
+      });
+
+      if (!response.ok) throw new Error("Form submission failed");
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="section contact">
       <h2 className="sectionTitle">Contact <span>Me</span></h2>
-      <form className="contactForm" onSubmit={(e) => e.preventDefault()}>
+      <form className="contactForm" action="https://formsubmit.co/uzair12ahmad34@gmail.com" method="POST" onSubmit={submit}>
         <div className="inputGroup">
           <label className="srOnly" htmlFor="contact-name">Full name</label>
-          <input id="contact-name" name="name" type="text" autoComplete="name" placeholder="Full Name" />
+          <input id="contact-name" name="name" type="text" autoComplete="name" placeholder="Full Name" required />
           <label className="srOnly" htmlFor="contact-email">Email address</label>
-          <input id="contact-email" name="email" type="email" autoComplete="email" placeholder="Email Address" />
+          <input id="contact-email" name="email" type="email" autoComplete="email" placeholder="Email Address" required />
           <label className="srOnly" htmlFor="contact-phone">Phone number</label>
           <input id="contact-phone" name="phone" type="tel" autoComplete="tel" placeholder="Phone Number" />
           <label className="srOnly" htmlFor="contact-subject">Subject</label>
@@ -436,8 +462,10 @@ function Contact() {
         </div>
         <div className="messageGroup">
           <label className="srOnly" htmlFor="contact-message">Your message</label>
-          <textarea id="contact-message" name="message" placeholder="Your Message" />
-          <button className="btn primary" type="submit"><Send size={16} /> Send Message</button>
+          <textarea id="contact-message" name="message" placeholder="Your Message" required />
+          <button className="btn primary" type="submit" disabled={status === "sending"}><Send size={16} /> {status === "sending" ? "Sending…" : "Send Message"}</button>
+          {status === "success" && <p className="formStatus" role="status">Message sent successfully.</p>}
+          {status === "error" && <p className="formStatus error" role="alert">Message could not be sent. Please try again or email me directly.</p>}
         </div>
       </form>
     </section>
@@ -548,8 +576,8 @@ nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
 .projectCard { height: 100%; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
-.projectCard img { transition: transform .35s ease; }
-.projectCard:hover img { transform: scale(1.06); }
+.projectCard img, .videoBox img { transition: transform .35s ease; }
+.projectCard:hover img, .videoCard:hover .videoBox img { transform: scale(1.06); }
 .videoPlaceholder .videoThumb { transition: transform .35s ease, filter .3s; }
 .videoPlaceholder:hover .videoThumb { transform: scale(1.06); filter: brightness(.5); }
 .projectCard img, .projectCard .videoPlaceholder { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
@@ -573,6 +601,9 @@ nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom
 input, textarea { width: 100%; background: #121212; color: white; border: 1.5px solid var(--cyan); border-radius: 18px; padding: 22px; font-size: 16px; outline: none; }
 textarea { min-height: 248px; resize: vertical; }
 .messageGroup { display: grid; gap: 26px; justify-items: center; }
+.formStatus { margin: 0; color: var(--cyan); text-align: center; }
+.formStatus.error { color: #ff7b7b; }
+.contactForm button:disabled { cursor: wait; opacity: .7; }
 footer { background: linear-gradient(180deg, rgba(0,255,240,.06), rgba(17,17,17,0) 45%), #111; border-top: 1px solid var(--border); text-align: center; padding: 40px 12%; }
 footer .socials { justify-content: center; margin-top: 0; }
 .footerLinks { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin: 24px 0 34px; }
