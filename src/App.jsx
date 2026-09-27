@@ -131,10 +131,10 @@ const featuredProjects = [
     categories: ["Unity", "VR/AR", "Multiplayer"],
   },
   {
-    title: "Web AR Object Placement",
-    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
-    image: base + "images/WebAR_Objcet_Placement.png",
-    categories: ["WebXR", "VR/AR"],
+    title: "AR Media Platform",
+    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
+    image: base + "images/AR_Media_Platform_1.png",
+    categories: ["Unity", "AR"],
   },
 ];
 
@@ -209,7 +209,7 @@ function WhoIAm() {
       <div className="aboutGrid">
         <div className="aboutCard large">
           <p>
-            I'm a Software Developer specialized in XR with 3+ years of experience building interactive applications, simulations, and real-time systems using Unity and Unreal Engine. I enjoy solving practical problems by combining existing technologies, APIs, networking, and immersive interfaces into complete working solutions.
+            I'm an XR &amp; Software Developer with 3+ years of experience building interactive applications, simulations, and real-time systems using Unity and Unreal Engine. I enjoy solving practical problems by combining existing technologies, APIs, networking, and immersive interfaces into complete working solutions.
           </p>
           <div className="contactLine"><Mail size={16} /> uzair12ahmad34@gmail.com</div>
           <div className="contactLine"><Phone size={16} /> +92-3341574422</div>
@@ -392,7 +392,14 @@ function FeaturedProjects() {
       <h2 className="sectionTitle">Featured <span>Projects</span></h2>
       <div className="videoGrid">
         {featuredProjects.map((project) => (
-          <article className="videoCard" key={project.title}>
+          <motion.article
+            className="videoCard"
+            key={project.title}
+            initial={{ opacity: 0, scale: 0.94 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.24, ease: "easeOut" }}
+          >
             <div className="videoBox">
               {project.video ? (
                 <LazyVideo src={project.video} poster={project.poster} title={project.title} />
@@ -405,7 +412,7 @@ function FeaturedProjects() {
             <div className="categories" aria-label="Project categories">
               {project.categories.map((category) => <span key={category}>{category}</span>)}
             </div>
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>

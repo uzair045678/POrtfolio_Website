@@ -1,6 +1,6 @@
 # Uzair Ahmad Mirza — Portfolio Website
 
-Portfolio of Uzair Ahmad Mirza, an XR and software developer building interactive applications, simulations, and multiplayer systems with Unity, Unreal Engine, C#, and C++.
+Portfolio of Uzair Ahmad Mirza, an XR & Software Developer building interactive applications, simulations, and multiplayer systems with Unity, Unreal Engine, C#, and C++.
 
 The site showcases AR, VR, and XR work including training simulators, multiplayer experiences, mobile games, WebAR, and real-time robot control. It remains an interactive React application while build-time prerendering exposes the full portfolio content to search engines and non-JavaScript clients.
 
