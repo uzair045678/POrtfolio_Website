@@ -53,10 +53,11 @@ const portfolioProjects = [
     categories: ["Unity", "AR"],
   },
   {
-    title: "Virtual Hajj VR Tour",
-    desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: base + "images/virtual-hajj-tour.webp",
-    categories: ["Unreal Engine", "VR", "Simulation"],
+    title: "HomeCare Safety VR Simulator",
+    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
+    video: base + "videos/HomeCare_Safety_VR_3.mp4",
+    poster: base + "images/homecare-vr.webp",
+    categories: ["Unity", "VR", "AI"],
   },
   
   {
@@ -119,10 +120,11 @@ const portfolioProjects = [
 
 const featuredProjects = [
   {
-    title: "Virtual Hajj VR Tour",
-    desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
-    image: base + "images/virtual-hajj-tour.webp",
-    categories: ["Unreal Engine", "VR", "Simulation"],
+    title: "HomeCare Safety VR Simulator",
+    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
+    video: base + "videos/HomeCare_Safety_VR_3.mp4",
+    poster: base + "images/homecare-vr.webp",
+    categories: ["Unity", "VR", "AI"],
   },
   {
     title: "RoboSync — Real-Time Robot Control & Telemetry",
