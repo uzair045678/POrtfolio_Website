@@ -100,7 +100,7 @@ export default function Hero() {
         <h1>Hi, it's <span>Uzair Ahmad Mirza</span></h1>
         <h2>I'm an <span>{typedRole}</span><span className="typeCursor" aria-hidden="true">|</span></h2>
         <p>
-          I am a problem solver,  I build immersive AR, VR, XR, and real-time interactive experiences using Unity,
+          I am a problem solver. I build immersive AR, VR, XR, and real-time interactive experiences using Unity,
           Unreal Engine, C#, C++, and modern gameplay systems. I specialize in VR/AR applications,
           interactive simulations, and real-world XR solutions that bridge virtual environments with practical applications.
         </p>

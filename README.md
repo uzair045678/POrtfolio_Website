@@ -1,6 +1,10 @@
 # Uzair Ahmad Mirza — Portfolio Website
 
-React + Vite portfolio site with an animated 3D avatar hero (React Three Fiber), lazy-loaded project videos, and a filterable portfolio grid.
+Portfolio of Uzair Ahmad Mirza, an XR and software developer building interactive applications, simulations, and multiplayer systems with Unity, Unreal Engine, C#, and C++.
+
+The site showcases AR, VR, and XR work including training simulators, multiplayer experiences, mobile games, WebAR, and real-time robot control. It remains an interactive React application while build-time prerendering exposes the full portfolio content to search engines and non-JavaScript clients.
+
+**Live site:** [uzair045678.github.io/POrtfolio_Website](https://uzair045678.github.io/POrtfolio_Website/)
 
 ## Requirements
 
@@ -29,7 +33,7 @@ Then open the URL shown in the terminal (usually http://localhost:5173/POrtfolio
 npm run build
 ```
 
-Output goes to the `dist/` folder.
+Output goes to the `dist/` folder. The build then renders the React app into `dist/index.html`, so the portfolio text is present before JavaScript runs.
 
 ## Preview the Production Build
 
@@ -49,6 +53,7 @@ npm run lint
   - `Hero.jsx` / `HeroAvatar.jsx` — hero section + 3D avatar scene
   - `App.jsx` — main page sections (About, Portfolio, Skills, Contact, Footer)
 - `public/` — static assets served as-is (GLB model, images, videos)
+- `prerender.mjs` — build-time React renderer for crawlable HTML
 - `dist/` — production build output
 
 ## Notes

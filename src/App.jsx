@@ -447,6 +447,7 @@ function Footer() {
         <a href="#portfolio">Portfolio</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
+        <a href={base + "profile.html"}>Professional Profile</a>
       </nav>
       <p>© Uzair Ahmad Mirza | All Rights Reserved</p>
     </footer>
