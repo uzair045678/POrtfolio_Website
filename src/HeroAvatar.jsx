@@ -31,12 +31,18 @@ function CameraDebugger() {
 
 export default function HeroAvatar({ onLoaded }) {
   return (
-    <Canvas camera={{ position: [-17.889551863863957, 1.093526315702387, 24.790483188927276], fov: 5 }} gl={{ antialias: true }}>
+    <Canvas
+      camera={{ position: [-17.889551863863957, 1.093526315702387, 24.790483188927276], fov: 5 }}
+      gl={{ antialias: true }}
+      dpr={[1, 1.5]}
+    >
       <CameraDebugger />
-      <ambientLight intensity={1} color="white" />
-      <directionalLight position={[5, 5, 5]} intensity={10} color="white" />
-      <directionalLight position={[-5, -5, -5]} intensity={2} color="white" />
-      <directionalLight position={[5, 0, -5]} intensity={4} color="white" />
+      <ambientLight intensity={1.6} />
+      <hemisphereLight intensity={0.9} color="#ffffff" groundColor="#404040" />
+      <directionalLight position={[-4, 6, 10]} intensity={4} />
+      <directionalLight position={[-9, 2, 6]} intensity={2.2} />
+      <directionalLight position={[5, 2, -6]} intensity={1.4} />
+      <directionalLight position={[0, -3, 3]} intensity={0.8} />
       <Suspense fallback={null}>
         <AvatarModel onLoaded={onLoaded} />
       </Suspense>

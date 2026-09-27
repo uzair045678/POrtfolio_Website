@@ -13,9 +13,55 @@ function Socials() {
   );
 }
 
+const roles = ["XR Developer", "Unity Developer", "Unreal Engine Developer", "AR/VR Engineer"];
+
+function useTypingRole() {
+  const [text, setText] = useState(roles[0]);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+
+    let roleIndex = 0;
+    let charCount = roles[0].length;
+    let deleting = false;
+    let timerId;
+
+    const tick = () => {
+      const current = roles[roleIndex];
+
+      if (!deleting) {
+        charCount += 1;
+        setText(current.slice(0, charCount));
+        if (charCount >= current.length) {
+          deleting = true;
+          timerId = window.setTimeout(tick, 2000);
+          return;
+        }
+        timerId = window.setTimeout(tick, 90);
+      } else {
+        charCount -= 1;
+        setText(current.slice(0, charCount));
+        if (charCount <= 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          timerId = window.setTimeout(tick, 400);
+          return;
+        }
+        timerId = window.setTimeout(tick, 45);
+      }
+    };
+
+    timerId = window.setTimeout(tick, 2000);
+    return () => window.clearTimeout(timerId);
+  }, []);
+
+  return text;
+}
+
 export default function Hero() {
   const [modelLoaded, setModelLoaded] = useState(false);
   const [shouldLoadModel, setShouldLoadModel] = useState(false);
+  const typedRole = useTypingRole();
   const fallbackImg = base + "poster.webp";
   const handleModelLoaded = useCallback(() => setModelLoaded(true), []);
 
@@ -52,7 +98,7 @@ export default function Hero() {
     <section id="home" className="hero section">
       <div className="heroText">
         <h1>Hi, it's <span>Uzair Ahmad Mirza</span></h1>
-        <h2>I'm an <span>XR Developer</span></h2>
+        <h2>I'm an <span>{typedRole}</span><span className="typeCursor" aria-hidden="true">|</span></h2>
         <p>
           I am a problem solver,  I build immersive AR, VR, XR, and real-time interactive experiences using Unity,
           Unreal Engine, C#, C++, and modern gameplay systems. I specialize in VR/AR applications,

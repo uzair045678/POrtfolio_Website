@@ -119,24 +119,22 @@ const portfolioProjects = [
 
 const featuredProjects = [
   {
-    title: "VR Home Caretaker Simulator",
-    desc: "Unity VR simulator with Convai for home safety hazard detection and AI-driven elder avatar training.",
-    video: base + "videos/HomeCare_Safety_VR_3.mp4",
-    poster: base + "images/HomeCare_VR.png",
-    categories: ["Unity", "VR/AR", "AI"],
+    title: "Virtual Hajj VR Tour",
+    desc: "Immersive Unreal VR experience of Hajj with multilingual support and interactive UI widgets.",
+    image: base + "images/Virtual Hajj Tour 3.jpg",
+    categories: ["Unreal Engine", "VR/AR", "Simulation"],
   },
   {
-    title: "Multiplayer VR Helicopter Plugin",
-    desc: "Server-authoritative multiplayer VR helicopter plugin in Unreal with replicated flight controls.",
-    video: base + "videos/Helicopter_Simulator_3.mp4",
-    poster: base + "images/Helicopter.png",
-    categories: ["Unreal Engine", "VR/AR", "Multiplayer"],
+    title: "RoboSync — Real-Time Robot Control & Telemetry",
+    desc: "Unity PC app for controlling Arduino robots with live battle telemetry, Mirror Networking multiplayer, and Firebase integration.",
+    image: base + "images/Robot SImulation2.jpg",
+    categories: ["Unity", "VR/AR", "Multiplayer"],
   },
   {
-    title: "AR Media Platform",
-    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
-    image: base + "images/AR_Media_Platform_1.png",
-    categories: ["Unity", "VR/AR"],
+    title: "Web AR Object Placement",
+    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
+    image: base + "images/WebAR_Objcet_Placement.png",
+    categories: ["WebXR", "VR/AR"],
   },
 ];
 
@@ -163,16 +161,41 @@ export default function App() {
   );
 }
 
+const navLinks = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About Me" },
+  { id: "portfolio", label: "Portfolio" },
+  { id: "skills", label: "Skills" },
+  { id: "contact", label: "Contact" },
+];
+
 function Navbar() {
+  const [active, setActive] = useState("home");
+
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-35% 0px -55% 0px" },
+    );
+    navLinks.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header className="navbar">
       <a href="#home" className="logo">Uzair Ahmad<span> - Portfolio</span></a>
       <nav aria-label="Primary navigation">
-        <a href="#home">Home</a>
-        <a href="#about">About Me</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+        {navLinks.map(({ id, label }) => (
+          <a key={id} href={`#${id}`} className={active === id ? "active" : ""} aria-current={active === id ? "true" : undefined}>{label}</a>
+        ))}
       </nav>
     </header>
   );
@@ -465,14 +488,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 nav { display: flex; gap: 34px; }
 nav a { min-height: 44px; padding: 8px 4px; display: inline-flex; align-items: center; font-size: 15px; transition: .3s; }
 nav a:hover, nav a:focus-visible { color: var(--cyan); }
+nav a.active { color: var(--cyan); position: relative; }
+nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; border-radius: 2px; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
 .hero { min-height: 88vh; display: grid; grid-template-columns: 1.05fr .95fr; gap: 80px; align-items: center; }
 .hero h1 { font-size: clamp(44px, 6vw, 78px); margin: 0; }
 .hero h2 { font-size: clamp(26px, 4vw, 42px); margin: 8px 0 20px; }
+.typeCursor { color: var(--cyan); font-weight: 400; animation: caretBlink 1s step-end infinite; }
+@keyframes caretBlink { 50% { opacity: 0; } }
 .hero p { max-width: 650px; color: var(--text); line-height: 1.8; font-weight: 600; }
 .heroImageWrap { position: relative; justify-self: center; width: min(430px, 82vw); aspect-ratio: 1; border-radius: 50%; padding: 7px; background: var(--cyan); box-shadow: 0 0 38px rgba(0,255,240,.7); }
-.openToWorkBadge { position: absolute; top: -74px; right: -80px; z-index: 2; display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; border: 2px solid var(--cyan); border-radius: 999px; background: var(--cyan); color: #050505; box-shadow: 0 0 32px rgba(0,255,240,.55); font-size: 24px; font-weight: 800; line-height: 1.2; letter-spacing: .4px; white-space: nowrap; }
+.openToWorkBadge { position: absolute; top: 18px; right: 18px; z-index: 3; display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px; border: 2px solid var(--cyan); border-radius: 999px; background: var(--cyan); color: #050505; box-shadow: 0 0 28px rgba(0,255,240,.55); font-size: 17px; font-weight: 800; line-height: 1.2; letter-spacing: .4px; white-space: nowrap; }
 .openToWorkDot { width: 12px; height: 12px; flex-shrink: 0; border-radius: 50%; background: #050505; box-shadow: 0 0 0 4px rgba(5,5,5,.12); }
-.heroCanvasWrap { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #00fff0a6; }
+.heroCanvasWrap { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 50% 32%, rgba(0,255,240,.30), rgba(0,255,240,.06) 58%, transparent 76%); }
 .heroCanvasWrap canvas { display: block; width: 100% !important; height: 100% !important; }
 .heroFallbackImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.6s; z-index: 1; }
 .heroFallbackImg.loaded { opacity: 0; pointer-events: none; }
@@ -513,6 +540,10 @@ nav a:hover, nav a:focus-visible { color: var(--cyan); }
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
 .projectCard { height: 100%; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
+.projectCard img { transition: transform .35s ease; }
+.projectCard:hover img { transform: scale(1.06); }
+.videoPlaceholder .videoThumb { transition: transform .35s ease, filter .3s; }
+.videoPlaceholder:hover .videoThumb { transform: scale(1.06); filter: brightness(.5); }
 .projectCard img, .projectCard .videoPlaceholder { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard video { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard h3, .videoCard h3 { font-size: 22px; margin: 18px 0 8px; }
@@ -525,8 +556,7 @@ nav a:hover, nav a:focus-visible { color: var(--cyan); }
 .videoBox video, .videoBox img { width: 100%; height: 210px; object-fit: cover; display: block; }
 .videoBox .videoPlaceholder { width: 100%; height: 210px; }
 .videoPlaceholder { position: relative; padding: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.videoThumb { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.7); transition: filter .3s; }
-.videoPlaceholder:hover .videoThumb { filter: brightness(.5); }
+.videoThumb { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(.7); }
 .videoPlaceholder:hover .playIcon { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 .playIcon { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: white; opacity: .8; pointer-events: none; transition: .3s; width: 56px; height: 56px; }
 .contact { background: #050505; }
@@ -535,13 +565,10 @@ nav a:hover, nav a:focus-visible { color: var(--cyan); }
 input, textarea { width: 100%; background: #121212; color: white; border: 1.5px solid var(--cyan); border-radius: 18px; padding: 22px; font-size: 16px; outline: none; }
 textarea { min-height: 248px; resize: vertical; }
 .messageGroup { display: grid; gap: 26px; justify-items: center; }
-footer { background: #111; text-align: center; padding: 40px 12%; }
+footer { background: linear-gradient(180deg, rgba(0,255,240,.06), rgba(17,17,17,0) 45%), #111; border-top: 1px solid var(--border); text-align: center; padding: 40px 12%; }
 footer .socials { justify-content: center; margin-top: 0; }
 .footerLinks { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin: 24px 0 34px; }
 footer p { margin: 0; }
-@media (max-width: 1200px) {
-  .openToWorkBadge { right: 0; }
-}
 @media (max-width: 980px) {
   .navbar { padding: 18px 6%; flex-direction: column; gap: 18px; }
   nav { gap: 18px; flex-wrap: wrap; justify-content: center; }
@@ -549,7 +576,6 @@ footer p { margin: 0; }
   .hero { grid-template-columns: 1fr; text-align: center; gap: 45px; }
   .heroText p { margin-inline: auto; }
   .heroImageWrap { margin-top: 20px; }
-  .openToWorkBadge { top: -30px; font-size: 20px; padding: 13px 22px; }
   .socials, .buttons { justify-content: center; }
   .aboutGrid, .skillsGrid, .projectGrid, .videoGrid, .contactForm { grid-template-columns: 1fr; }
   .aboutCard.large { grid-row: auto; }

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://uzair045678.github.io/POrtfolio_Website/sitemap.xml
