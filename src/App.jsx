@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Mail,
   Phone,
@@ -8,137 +8,18 @@ import {
   Code2,
   Cpu,
   Box,
-  PlayCircle,
   Briefcase,
+  ArrowRight,
 } from "lucide-react";
-import { FaLinkedin, FaGithub, FaGooglePlay } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import Hero from "./Hero.jsx";
+import LazyVideo from "./LazyVideo.jsx";
+import ProjectModal from "./ProjectModal.jsx";
+import useProjectRoute from "./useProjectRoute.js";
+import { projectList, featuredProjects } from "./projects.js";
 
 const base = import.meta.env.BASE_URL || "/";
-
-const portfolioProjects = [
-  {
-    title: "HomeCare Safety VR Simulator",
-    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
-    video: base + "videos/HomeCare_Safety_VR_3.mp4",
-    poster: base + "images/homecare-vr.webp",
-    categories: ["Unity", "VR", "AI"],
-  },
-  {
-    title: "Multiplayer Helicopter Simulator (Unreal Engine 5)",
-    desc: "UE5 multiplayer VR helicopter simulator with server-authoritative flight controls and realistic physics. I also implemented player seat assignment, detachment, and ownership transfer from pilot to co-pilot using C++ and Blueprints.",
-    video: base + "videos/Helicopter_Simulator_3.mp4",
-    poster: base + "images/helicopter.webp",
-    categories: ["Unreal Engine", "VR", "Multiplayer"],
-  },
-  {
-    title: "Immersive Mecanno VR (FYP)",
-    desc: "Mobile + VR app for assembling and disassembling LEGO/Mecanno models with snapping mechanics.",
-    video: base + "videos/Immersive_Mecanno_VR_2.mp4",
-    poster: base + "images/mecano-vr.webp",
-    categories: ["Unity", "VR"],
-  },
-  {
-    title: "Endless Runner Game (Unreal Engine 5)",
-    desc: "UE5 endless runner with dynamic obstacle generation and power-ups.",
-    video: base + "videos/EndlessRunnerGame_2.mp4",
-    poster: base + "images/runner-game.webp",
-    categories: ["Unreal Engine", "Games"],
-  },
-  {
-    title: "AR Media Platform",
-    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
-    image: base + "images/ar-media-platform.webp",
-    categories: ["Unity", "AR"],
-  },
-  {
-    title: "HomeCare Safety VR Simulator",
-    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
-    video: base + "videos/HomeCare_Safety_VR_3.mp4",
-    poster: base + "images/homecare-vr.webp",
-    categories: ["Unity", "VR", "AI"],
-  },
-  
-  {
-    title: "AR Measurement App",
-    desc: "AR app that uses plane detection and spatial mapping to measure real-world objects and distances with high accuracy.",
-    image: base + "images/ar-measurement-app.webp",
-    categories: ["Unity", "AR"],
-  },
-  {
-    title: "AR Portfolio Contact Card",
-    desc: "Scannable AR contact card overlaying 3D portfolio content for interactive networking.",
-    image: base + "images/ar-contact-card.webp",
-    categories: ["Unity", "AR"],
-  },
-
-  {
-    title: "AR Weather App",
-    desc: "Fetches weather via API and displays it in an interactive AR interface with 3D weather models.",
-    image: base + "images/ar-weather.webp",
-    categories: ["Unity", "AR"],
-  },
-
-  {
-    title: "Web AR Object Placement",
-    desc: "WebAR-based system for interactive 3D model placement using plane detection with WebXR.",
-    image: base + "images/webar-object-placement.webp",
-    categories: ["AR"],
-  },
-  
-  {
-    title: "RoboSync — Real-Time Robot Control & Telemetry System",
-    desc: "Unity-based PC application for controlling Arduino robots, synchronizing live battle telemetry, supporting local multiplayer through Mirror Networking, and integrating Firebase Realtime Database for communication between physical robots and the application.",
-    image: base + "images/robot-simulation.webp",
-    categories: ["Unity", "Multiplayer", "Simulation"],
-  },
-  
-  {
-    title: "Color Connect – Line Puzzle",
-    link: "https://play.google.com/store/apps/details?id=com.XRDigital.DotConnect",
-    desc: "Android puzzle game with 10k+ downloads, optimized load times by 20% with Unity Ads and Firebase Analytics.",
-    image: base + "images/color-connect.webp",
-    categories: ["Unity", "Mobile", "Games"],
-  },
-  {
-    title: "Ricochet Monster Mobile Game",
-    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.Monster2",
-    desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
-    image: base + "images/ricochet-monster.webp",
-    categories: ["Unity", "Mobile", "Games"],
-  },
-  {
-    title: "Mob Rushers Mobile Game",
-    link: "https://play.google.com/store/apps/details?id=com.DefaultCompany.RunnerClash",
-    desc: "Maintained live mobile games across Android/iOS with Unity Ads, AdMob, Firebase Analytics.",
-    image: base + "images/mob-rushers.webp",
-    categories: ["Unity", "Mobile", "Games"],
-  },
-  
-];
-
-const featuredProjects = [
-  {
-    title: "HomeCare Safety VR Simulator",
-    desc: "Unity VR simulator with Convai integration for interactive home safety hazard detection and AI training.",
-    video: base + "videos/HomeCare_Safety_VR_3.mp4",
-    poster: base + "images/homecare-vr.webp",
-    categories: ["Unity", "VR", "AI"],
-  },
-  {
-    title: "RoboSync — Real-Time Robot Control & Telemetry",
-    desc: "Unity PC app for controlling Arduino robots with live battle telemetry, Mirror Networking multiplayer, and Firebase integration.",
-    image: base + "images/robot-simulation.webp",
-    categories: ["Unity", "Multiplayer", "Simulation"],
-  },
-  {
-    title: "AR Media Platform",
-    desc: "Dynamic image target recognition platform with cloud-backed recognition and OpenCV-based validation. Users can upload AR image targets at runtime and choose the content rendered on them (currently supports video).",
-    image: base + "images/ar-media-platform.webp",
-    categories: ["Unity", "AR"],
-  },
-];
 
 const skills = [
   { icon: <Gamepad2 />, title: "Engines & Languages", items: ["Unity (2D/3D, AR, VR)", "Unreal Engine (BP, C++)", "C#", "C++", "Python"] },
@@ -148,18 +29,27 @@ const skills = [
 ];
 
 export default function App() {
+  const { activeProject, openProject, closeProject } = useProjectRoute();
+
   return (
-    <main>
-      <style>{css}</style>
-      <Navbar />
-      <Hero />
-      <WhoIAm />
-      <FeaturedProjects />
-      <Portfolio />
-      <Skills />
-      <Contact />
-      <Footer />
-    </main>
+    <>
+      <main>
+        <style>{css}</style>
+        <Navbar />
+        <Hero />
+        <WhoIAm />
+        <FeaturedProjects onOpen={openProject} />
+        <Portfolio onOpen={openProject} />
+        <Skills />
+        <Contact />
+        <Footer />
+      </main>
+      <ProjectModal
+        project={activeProject}
+        onClose={closeProject}
+        onNavigate={openProject}
+      />
+    </>
   );
 }
 
@@ -252,89 +142,30 @@ function Skills() {
   );
 }
 
-function LazyVideo({ src, poster, title }) {
-  const placeholderRef = useRef(null);
-  const [isNearViewport, setIsNearViewport] = useState(false);
-  const [playRequested, setPlayRequested] = useState(false);
-
-  useEffect(() => {
-    const element = placeholderRef.current;
-    if (!element || !("IntersectionObserver" in window)) {
-      setIsNearViewport(true);
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsNearViewport(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "400px 0px" },
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
-  const requestPlayback = () => {
-    setIsNearViewport(true);
-    setPlayRequested(true);
-  };
-
-  if (playRequested && isNearViewport) {
-    return (
-      <video
-        src={src}
-        poster={poster}
-        controls
-        autoPlay
-        playsInline
-        preload="metadata"
-        aria-label={`${title} video`}
-      />
-    );
-  }
-
-  return (
-    <button
-      ref={placeholderRef}
-      className="videoPlaceholder"
-      type="button"
-      aria-label={`Play ${title} video`}
-      onClick={requestPlayback}
-    >
-      <img src={poster} alt="" className="videoThumb" loading="lazy" decoding="async" fetchPriority="low" />
-      <PlayCircle className="playIcon" aria-hidden="true" />
-    </button>
-  );
-}
-
-function Portfolio() {
-  const [activeCategory, setActiveCategory] = useState("All");
-  const categories = [
+function Portfolio({ onOpen }) {
+  const [activeTag, setActiveTag] = useState("All");
+  const tags = [
     "All",
-    ...new Set(portfolioProjects.flatMap((project) => project.categories)),
+    ...new Set(projectList.flatMap((project) => project.tags)),
   ];
-  const visibleProjects = activeCategory === "All"
-    ? portfolioProjects
-    : portfolioProjects.filter((project) => project.categories.includes(activeCategory));
+  const visibleProjects = activeTag === "All"
+    ? projectList
+    : projectList.filter((project) => project.tags.includes(activeTag));
 
   return (
     <section id="portfolio" className="section portfolio">
       <p className="label">PORTFOLIO</p>
       <h2 className="sectionTitle">Portfolio <span>Projects</span></h2>
       <div className="categoryFilters" role="group" aria-label="Filter portfolio projects by category">
-        {categories.map((category) => (
+        {tags.map((tag) => (
           <button
-            className={`categoryFilter${activeCategory === category ? " active" : ""}`}
+            className={`categoryFilter${activeTag === tag ? " active" : ""}`}
             type="button"
-            aria-pressed={activeCategory === category}
-            onClick={() => setActiveCategory(category)}
-            key={category}
+            aria-pressed={activeTag === tag}
+            onClick={() => setActiveTag(tag)}
+            key={tag}
           >
-            {category}
+            {tag}
           </button>
         ))}
       </div>
@@ -343,14 +174,14 @@ function Portfolio() {
           {visibleProjects.map((project) => (
             <motion.div
               className="projectGridItem"
-              key={project.title}
+              key={project.slug}
               layout
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
               transition={{ duration: 0.24, ease: "easeOut" }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard project={project} onOpen={onOpen} />
             </motion.div>
           ))}
         </AnimatePresence>
@@ -359,35 +190,34 @@ function Portfolio() {
   );
 }
 
-function ProjectCard({ project }) {
-  const card = (
+function ProjectCard({ project, onOpen }) {
+  return (
     <article className="projectCard">
       {project.video ? (
-        <LazyVideo src={project.video} poster={project.poster} title={project.title} />
+        <LazyVideo src={project.video} poster={project.image} title={project.title} />
       ) : (
         <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
       )}
       <h3>{project.title}</h3>
-      <p>{project.desc}</p>
-      <div className="categories" aria-label="Project categories">
-        {project.categories.map((category) => <span key={category}>{category}</span>)}
+      <p className="projectCardDesc">{project.desc}</p>
+      <div className="tags" aria-label="Project technologies">
+        {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
       </div>
-      {project.link && (
-        <span className="storeBtn">
-          <FaGooglePlay aria-hidden="true" /> Play Store
-        </span>
-      )}
+      <span className="viewProject" aria-hidden="true">
+        Check Details <ArrowRight />
+      </span>
+      <button
+        className="cardHitArea"
+        type="button"
+        aria-haspopup="dialog"
+        aria-label={`View project: ${project.title}`}
+        onClick={() => onOpen(project.slug)}
+      />
     </article>
   );
-
-  return project.link ? (
-    <a href={project.link} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} on Google Play`} className="projectLink">
-      {card}
-    </a>
-  ) : card;
 }
 
-function FeaturedProjects() {
+function FeaturedProjects({ onOpen }) {
   return (
     <section className="section featured">
       <p className="label">FEATURED</p>
@@ -396,7 +226,7 @@ function FeaturedProjects() {
         {featuredProjects.map((project) => (
           <motion.article
             className="videoCard"
-            key={project.title}
+            key={project.slug}
             initial={{ opacity: 0, scale: 0.94 }}
             whileInView={{ opacity: 1, scale: 1 }}
             whileHover={{ y: -8 }}
@@ -405,16 +235,26 @@ function FeaturedProjects() {
           >
             <div className="videoBox">
               {project.video ? (
-                <LazyVideo src={project.video} poster={project.poster} title={project.title} />
+                <LazyVideo src={project.video} poster={project.image} title={project.title} />
               ) : (
                 <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
               )}
             </div>
             <h3>{project.title}</h3>
-            <p>{project.desc}</p>
-            <div className="categories" aria-label="Project categories">
-              {project.categories.map((category) => <span key={category}>{category}</span>)}
+            <p className="projectCardDesc">{project.desc}</p>
+            <div className="tags" aria-label="Project technologies">
+              {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
             </div>
+            <span className="viewProject" aria-hidden="true">
+              Check Details <ArrowRight />
+            </span>
+            <button
+              className="cardHitArea"
+              type="button"
+              aria-haspopup="dialog"
+              aria-label={`View project: ${project.title}`}
+              onClick={() => onOpen(project.slug)}
+            />
           </motion.article>
         ))}
       </div>
@@ -566,28 +406,67 @@ nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom
 .skillCard { padding: 28px; }
 .skillCard h3 { display: flex; align-items: center; gap: 14px; margin-top: 0; }
 .skillCard h3 span { color: var(--cyan); width: 42px; height: 42px; display: grid; place-items: center; background: rgba(0,255,240,.1); border-radius: 12px; }
-.skillTags, .categories { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-.skillTags span, .categories span { background: #1c1c1c; border: 1px solid rgba(255,255,255,.09); border-radius: 7px; padding: 9px 13px; color: var(--muted); font-size: 14px; }
+.skillTags, .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.skillTags span, .tags span { background: #1c1c1c; border: 1px solid rgba(255,255,255,.09); border-radius: 7px; padding: 9px 13px; color: var(--muted); font-size: 14px; }
 .portfolio { background: #101010; }
 .categoryFilters { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin: -20px auto 36px; }
 .categoryFilter { flex: 0 0 auto; min-height: 42px; padding: 10px 20px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: #191919; color: var(--muted); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: background-color .25s, border-color .25s, color .25s, box-shadow .25s, transform .25s; }
 .categoryFilter:hover { color: var(--text); border-color: var(--border); transform: translateY(-2px); }
 .categoryFilter.active { background: var(--cyan); border-color: var(--cyan); color: #050505; box-shadow: 0 0 22px rgba(0,255,240,.28); }
 .projectGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.projectGridItem, .projectLink { display: block; height: 100%; min-width: 0; color: inherit; text-decoration: none; }
+.projectGridItem { display: block; height: 100%; min-width: 0; }
 .projectCard, .videoCard { padding: 24px; transition: .3s; }
 .projectCard { height: 100%; }
+.projectCard, .videoCard { position: relative; display: flex; flex-direction: column; align-items: stretch; text-align: left; }
+.cardHitArea { position: absolute; inset: 0; z-index: 1; border: 0; border-radius: inherit; padding: 0; background: transparent; cursor: pointer; }
+.cardHitArea:focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
 .projectCard:hover, .videoCard:hover { transform: translateY(-8px); border-color: var(--border); box-shadow: 0 0 25px rgba(0,255,240,.12); }
 .projectCard img, .videoBox img { transition: transform .35s ease; }
 .projectCard:hover img, .videoCard:hover .videoBox img { transform: scale(1.06); }
 .videoPlaceholder .videoThumb { transition: transform .35s ease, filter .3s; }
 .videoPlaceholder:hover .videoThumb { transform: scale(1.06); filter: brightness(.5); }
+/* Keeps the inline play button above the stretched card hit area. */
+.projectCard .videoPlaceholder, .projectCard video, .videoCard .videoBox { position: relative; z-index: 2; }
 .projectCard img, .projectCard .videoPlaceholder { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard video { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
 .projectCard h3, .videoCard h3 { font-size: 22px; margin: 18px 0 8px; }
 .projectCard p, .videoCard p { color: var(--muted); line-height: 1.6; }
-.storeBtn { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 10px 18px; background: #1c1c1c; border: 1px solid rgba(255,255,255,.09); border-radius: 10px; color: var(--cyan); font-size: 14px; cursor: pointer; transition: .3s; text-decoration: none; }
-.storeBtn:hover { background: rgba(0,255,240,.12); border-color: var(--cyan); }
+/* Card summaries stay at two lines; the full copy lives in the modal. */
+.projectCardDesc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.viewProject { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.08); color: var(--cyan); font-size: 14px; font-weight: 700; letter-spacing: .5px; }
+.viewProject svg { width: 17px; height: 17px; transition: transform .3s; }
+.projectCard:hover .viewProject svg, .videoCard:hover .viewProject svg { transform: translateX(4px); }
+.modalBackdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 5vh 4vw; background: rgba(0,0,0,.82); backdrop-filter: blur(8px); }
+.modalPanel { position: relative; display: flex; flex-direction: column; width: min(1250px, 88vw); max-height: 90vh; background: linear-gradient(160deg, #121212, #080808); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 0 60px rgba(0,255,240,.14); overflow: hidden; }
+.modalClose { position: absolute; top: 14px; right: 14px; z-index: 2; width: 44px; height: 44px; display: grid; place-items: center; background: rgba(5,5,5,.75); border: 1px solid var(--border); border-radius: 50%; color: var(--cyan); cursor: pointer; transition: .25s; }
+.modalClose:hover { background: var(--cyan); color: #000; transform: rotate(90deg); }
+.modalScroll { overflow-y: auto; overscroll-behavior: contain; padding: 44px clamp(20px, 4vw, 52px) 36px; }
+.modalHeader h2 { font-size: clamp(26px, 3.4vw, 40px); margin: 0 0 12px; line-height: 1.15; padding-right: 56px; }
+.modalDesc { color: var(--muted); line-height: 1.75; font-size: 17px; margin: 0; max-width: 78ch; }
+.modalHero { margin: 30px 0 6px; }
+.modalHero img, .modalHero .videoPlaceholder { width: 100%; max-height: 52vh; object-fit: cover; border-radius: 14px; border: 1px solid var(--border); background: #000; }
+.modalHero video { width: 100%; border-radius: 14px; border: 1px solid var(--border); background: #000; }
+.modalSection { margin-top: 30px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.08); }
+.modalSectionTitle { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin: 0 0 12px; }
+.modalSection p { color: var(--muted); line-height: 1.8; font-size: 16px; margin: 0; max-width: 82ch; }
+.modalList { margin: 0; padding: 0; list-style: none; display: grid; gap: 11px; max-width: 82ch; }
+.modalList li { position: relative; padding-left: 26px; color: var(--muted); line-height: 1.7; font-size: 16px; }
+.modalList li::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 9px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px rgba(0,255,240,.7); }
+.modalGallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.modalFigure { margin: 0; }
+.modalFigure img, .modalFigure video { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); background: #000; }
+.modalFigure figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
+.modalLinks { display: flex; flex-wrap: wrap; gap: 12px; }
+.modalLink { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 11px 20px; background: #1c1c1c; border: 1px solid var(--border); border-radius: 10px; color: var(--cyan); font-weight: 700; font-size: 14px; transition: .25s; }
+.modalLink:hover { background: rgba(0,255,240,.12); }
+.modalNav { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 34px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.08); }
+.modalNavBtn { display: inline-flex; align-items: center; gap: 10px; max-width: 46%; padding: 12px 16px; background: #1a1a1a; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font: inherit; font-size: 14px; text-align: left; cursor: pointer; transition: .25s; }
+.modalNavBtn.next { text-align: right; }
+.modalNavBtn:hover { border-color: var(--border); color: var(--cyan); }
+.modalNavBtn span { display: flex; flex-direction: column; min-width: 0; }
+.modalNavBtn small { color: var(--muted); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+.modalNavBtn svg { flex: 0 0 auto; width: 20px; height: 20px; }
+.modalNavBtn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .featured { background: radial-gradient(circle at center, rgba(0,255,240,.06), transparent 45%), #050505; }
 .videoGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .videoBox { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); }
@@ -632,6 +511,11 @@ footer p { margin: 0; }
   .categoryFilter { min-height: 44px; }
   .heroImageWrap { width: min(280px, 100%); }
   .aboutCard.large, .projectCard, .videoCard, .skillCard { padding: 20px; }
+  .modalBackdrop { padding: 0; place-items: stretch; }
+  .modalPanel { width: 100%; max-height: 100vh; height: 100%; border-radius: 0; border: 0; }
+  .modalScroll { padding: 34px 20px 28px; }
+  .modalHeader h2 { padding-right: 0; font-size: 26px; }
+  .modalNavBtn { max-width: 100%; }
   input, textarea { border-radius: 14px; padding: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
