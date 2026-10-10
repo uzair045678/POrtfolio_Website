@@ -12,7 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
-import { SiFiverr } from "react-icons/si";
+import { SiFiverr, SiUpwork } from "react-icons/si";
 import { AnimatePresence, motion } from "framer-motion";
 import Hero from "./Hero.jsx";
 import LazyVideo from "./LazyVideo.jsx";
@@ -112,7 +112,9 @@ function WhoIAm() {
             <span style={{ color: "var(--muted)" }}> / </span>
             <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>GitHub</a>
             <span style={{ color: "var(--muted)" }}> / </span>
-            <a href="https://www.fiverr.com/sellers/insightpro_862/edit" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>Fiverr</a>
+            <a href="https://www.fiverr.com/insightpro_862?public_mode=AD" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>Fiverr</a>
+            <span style={{ color: "var(--muted)" }}> / </span>
+            <a href="https://www.upwork.com/freelancers/~01316287666907ead0?mp_source=share" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>Upwork</a>
           </div>
         </div>
         <Stat icon={<Briefcase />} value="3+" label="Years Experience" />
@@ -339,7 +341,8 @@ function Socials() {
     <div className="socials">
       <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on LinkedIn"><FaLinkedin size={26} aria-hidden="true" /></a>
       <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on GitHub"><FaGithub size={26} aria-hidden="true" /></a>
-      <a href="https://www.fiverr.com/sellers/insightpro_862/edit" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on Fiverr"><SiFiverr size={26} aria-hidden="true" /></a>
+      <a href="https://www.fiverr.com/insightpro_862?public_mode=AD" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on Fiverr"><SiFiverr size={26} aria-hidden="true" /></a>
+      <a href="https://www.upwork.com/freelancers/~01316287666907ead0?mp_source=share" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on Upwork"><SiUpwork size={26} aria-hidden="true" /></a>
     </div>
   );
 }
