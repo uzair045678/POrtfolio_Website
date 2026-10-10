@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { SiFiverr } from "react-icons/si";
 
 const base = import.meta.env.BASE_URL || "/";
 const AvatarScene = lazy(() => import("./HeroAvatar.jsx"));
@@ -7,8 +8,9 @@ const AvatarScene = lazy(() => import("./HeroAvatar.jsx"));
 function Socials() {
   return (
     <div className="socials">
-      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on LinkedIn"><FaLinkedin size={20} aria-hidden="true" /></a>
-      <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on GitHub"><FaGithub size={20} aria-hidden="true" /></a>
+      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on LinkedIn"><FaLinkedin size={26} aria-hidden="true" /></a>
+      <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on GitHub"><FaGithub size={26} aria-hidden="true" /></a>
+      <a href="https://www.fiverr.com/sellers/insightpro_862/edit" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on Fiverr"><SiFiverr size={26} aria-hidden="true" /></a>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { SiFiverr } from "react-icons/si";
 import { AnimatePresence, motion } from "framer-motion";
 import Hero from "./Hero.jsx";
 import LazyVideo from "./LazyVideo.jsx";
@@ -110,6 +111,8 @@ function WhoIAm() {
             <a href="https://www.linkedin.com/in/uzair-ahmad-mirza-b939a21a2/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>LinkedIn</a>
             <span style={{ color: "var(--muted)" }}> / </span>
             <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>GitHub</a>
+            <span style={{ color: "var(--muted)" }}> / </span>
+            <a href="https://www.fiverr.com/sellers/insightpro_862/edit" target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>Fiverr</a>
           </div>
         </div>
         <Stat icon={<Briefcase />} value="3+" label="Years Experience" />
@@ -334,8 +337,9 @@ function Footer() {
 function Socials() {
   return (
     <div className="socials">
-      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on LinkedIn"><FaLinkedin size={20} aria-hidden="true" /></a>
-      <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on GitHub"><FaGithub size={20} aria-hidden="true" /></a>
+      <a href="https://linkedin.com/in/uzair-ahmad-mirza-b939a21a2" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on LinkedIn"><FaLinkedin size={26} aria-hidden="true" /></a>
+      <a href="https://github.com/uzair045678" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on GitHub"><FaGithub size={26} aria-hidden="true" /></a>
+      <a href="https://www.fiverr.com/sellers/insightpro_862/edit" target="_blank" rel="noopener noreferrer" aria-label="Uzair Ahmad Mirza on Fiverr"><SiFiverr size={26} aria-hidden="true" /></a>
     </div>
   );
 }
@@ -384,7 +388,7 @@ nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom
 .heroCanvasInner { width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s; }
 .heroCanvasInner.loaded { opacity: 1; }
 .socials { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin: 28px 0; }
-.socials a { width: 42px; height: 42px; display: grid; place-items: center; border: 1.5px solid var(--cyan); border-radius: 50%; color: var(--cyan); transition: .3s; }
+.socials a { width: 52px; height: 52px; display: grid; place-items: center; border: 2px solid var(--cyan); border-radius: 50%; color: var(--cyan); transition: .3s; }
 .socials a:hover { background: var(--cyan); color: #000; box-shadow: 0 0 25px var(--cyan); transform: translateY(-4px); }
 .buttons { display: flex; gap: 14px; flex-wrap: wrap; }
 .btn { border: 1px solid var(--cyan); border-radius: 999px; padding: 13px 28px; font-weight: 800; letter-spacing: 1px; display: inline-flex; gap: 8px; align-items: center; justify-content: center; cursor: pointer; }
